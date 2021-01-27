@@ -1,7 +1,9 @@
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
-const Product = require('./models/product');
+const {  Product } = require('./models/product.js');
+app.use(express.json());
+
 
 /* ============================================== */
 // to can see the body from req instead of undefined
@@ -19,6 +21,28 @@ app.get('/', (req, res) => {
   console.log('GET /');
   res.json('SERVER IS WORKING :P');
 });
+
+
+/* ============================================== */
+
+app.post('/api/product', (req, res) => {
+  console.log('POST /product');
+  console.log('BODY: ', req.body);
+
+Product.create(req.body, (err, newProduct) => {
+    if (err) {
+      console.log('ERR: ', err);
+    } else {
+       console.log(newProduct)
+      res.json(newProduct);
+    }
+  });
+});
+
+
+/* ============================================== */
+
+
 
 app.delete('/deletePro/', (req, res) => {
 
@@ -43,3 +67,5 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log('SERVER IS WORKING ON http://localhost:' + PORT);
 });
+
+

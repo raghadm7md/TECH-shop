@@ -1,18 +1,28 @@
 const mongoose = require('mongoose');
 
-// Define Article Schema
-const articleSchema = new mongoose.Schema({
-  title: { type: String, required: true },
-  content: String,
-  author: { type: String, required: true },
-  published: { type: Boolean, default: true },
-  publishedOn: { type: Date, default: Date.now },
-}, {
-  timestamps: true,
+const orderSchema = new mongoose.Schema({
+  total: Number,
+  date: Date,
+  products_ID:String
 });
 
-// Compile our Model based on the Schema
-const Article = mongoose.model('Article', articleSchema);
+const userSchema = new mongoose.Schema({
+  name:{type : String , required:true },
+  password:{type:String, require:true },
+  email:{type: String , require:true },
+  isAdmin:{type:false , default:false },
 
-// Export our Model for use
-module.exports = Article;
+  // embed order in user
+  purchased: [orderSchema],
+});
+
+const User = mongoose.model('User', userSchema);
+const Tweet = mongoose.model('Tweet', tweetSchema);
+
+module.exports = {
+  favFood: 'CHICKEN',
+  // User,
+  User: User,
+  // Tweet,
+  Tweet: Tweet,
+};

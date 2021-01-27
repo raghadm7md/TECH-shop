@@ -6,23 +6,31 @@ const orderSchema = new mongoose.Schema({
   products_ID:String
 });
 
+
 const userSchema = new mongoose.Schema({
-  name:{type : String , required:true },
+  name:{type : String , required:true , trim: true},
   password:{type:String, require:true },
   email:{type: String , require:true },
   isAdmin:{type:false , default:false },
-
+  Address:{
+    city: String,
+    street: String,
+    houseNumber:Number,
+  },
   // embed order in user
   purchased: [orderSchema],
+  
+}
+, {
+  timestamps: true,
 });
 
 const User = mongoose.model('User', userSchema);
-const Tweet = mongoose.model('Tweet', tweetSchema);
+const Order = mongoose.model('Order', orderSchema);
 
 module.exports = {
-  favFood: 'CHICKEN',
   // User,
   User: User,
-  // Tweet,
-  Tweet: Tweet,
+  // Order,
+  Order: Order,
 };

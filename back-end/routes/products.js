@@ -14,9 +14,9 @@ mongoose.connection.once("open", () => {
 });
 /* ============================================== */
 
-router.get("/", (req, res) => {
+router.get("/testProducts", (req, res) => {
   console.log("GET /");
-  res.json("SERVER IS WORKING :P");
+  res.json("SERVER IS WORKING from products/js");
 });
 
 //MESHAL: write the code for app.get (to get all the products)

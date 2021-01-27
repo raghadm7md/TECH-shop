@@ -1,67 +1,45 @@
-// Require necessary NPM packages
 const express = require('express');
-const mongoose = require('mongoose');
-const cors = require('cors');
-
-// Require Route Files
-const indexRouter = require('./routes/index');
-const articlesRouter = require('./routes/articles');
-
-// Require DB Configuration File
-const db_url = require('./db');
-
-// Establish Database Connection
-mongoose.connect(db_url, { useNewUrlParser: true });
-mongoose.connection.once('open', () => {
-  console.log('Connected to Mongo');
-});
-
-// Instantiate Express Application Object
 const app = express();
+const mongoose = require('mongoose');
+const Product = require('./models/product');
 
-
-app.get('/', (req, res) => {
-  console.log('get /');
-  res.json('result');
-});
-
-/*** Middleware ***/
-
-// Add `bodyParser` middleware which will parse JSON requests
-// into JS objects before they reach the route files.
-//
-// The method `.use` sets up middleware for the Express application
+/* ============================================== */
+// to can see the body from req instead of undefined
 app.use(express.json());
 
-const reactPort = 3000;
-// Set CORS headers on response from this API using the `cors` NPM package.
-app.use(
-  cors({ origin: process.env.CLIENT_ORIGIN || `http://localhost:${reactPort}` })
-);
+mongoose.connect('mongodb://localhost:27017/products', {
+  useNewUrlParser: true,
+});
+mongoose.connection.once('open', () => {
+  console.log('DB IS CONNECTED :)');
+});
+/* ============================================== */
 
-/*** Routes ***/
-
-// Mount imported Routers
-app.use(indexRouter);
-app.use(articlesRouter);
-// app.use('/',indexRouter);
-// app.use('/articles',articlesRouter);
-
-/*** Routes ***/
-// Define PORT for the API to run on
-const PORT = process.env.PORT || 5000;
-
-// Start the server to listen for requests on a given port
-app.listen(PORT, () => {
-  console.log(`BLOGY => http://localhost:${PORT}`);
+app.get('/', (req, res) => {
+  console.log('GET /');
+  res.json('SERVER IS WORKING :P');
 });
 
-/*
-  C.R.U.D - Actions Table
-  Create          CREATE
-  Read
-    Read All      INDEX
-    Read By ID    SHOW
-  Update          UPDATE
-  Delete          DESTROY
-*/
+app.delete('/deletePro/', (req, res) => {
+
+  console.log('product ID: ', req.body.productId);
+
+  Product.findById(req.body.productId , (err, foundproduct) => {
+    console.log('FOUND USER: ', foundproduct);
+    foundproduct._id(req.body.productId).remove();
+    foundproduct.save((err, result) => {
+      if (err) {
+        console.log('ERR: ', err);
+      } else {
+        res.json(result);
+      }
+    });
+  });
+});
+
+/* ============================================== */
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log('SERVER IS WORKING ON http://localhost:' + PORT);
+});

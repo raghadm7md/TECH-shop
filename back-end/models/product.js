@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 
-// Define Article Schema
+// Define product Schema
 const ProductSchema = new mongoose.Schema({
-  name :{String }, 
-  price: { type: Number },
-  type: { type: String },
+  name :{type: String, required: true}, 
+  price: { type: Number , required: true},
+  type: { type: String, required: true },
   description: { type: String },
   quantitiy:{type:Number}
 }, {
@@ -17,8 +17,3 @@ const Product = mongoose.model('Product', ProductSchema);
 // Export our Model for use
 module.exports = Product;
 
-
-
-// required: true
-// required: true
-// required: true

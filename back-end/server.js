@@ -1,93 +1,49 @@
 const express = require("express");
-const app = express();
 const mongoose = require("mongoose");
-const Product = require("./models/product.js");
-app.use(express.json());
+// const Product = require("./models/product.js");
+// const cors = require('cors');
+// Require Route Files
+const productRouter = require('./routes/products');
+const userRouter = require('./routes/users');
+
+const db_url = require('./db');
 
 /* ============================================== */
-// to can see the body from req instead of undefined
-app.use(express.json());
-mongoose.connect("mongodb://localhost:27017/tech", {
-  useNewUrlParser: true,
+// Establish Database Connection
+mongoose.connect(db_url, { useNewUrlParser: true });
+mongoose.connection.once('open', () => {
+  console.log('Connected to Mongo');
 });
-mongoose.connection.once("open", () => {
-  console.log("DB IS CONNECTED !!!");
-});
+
+// Instantiate Express Application Object
+const app = express();
+
 /* ============================================== */
 
 app.get("/", (req, res) => {
   console.log("GET /");
-  res.json("SERVER IS WORKING :P");
+  res.json("WORKING FROM SEVER.JS");
 });
 
-//MESHAL: write the code for app.get (to get all the products)
-//get all prouct
-app.get("/product", (req, res) => {
-  console.log("GET /product");
-  Product.find({}, function (err, data) {
-    res.json(data);
-  });
-});
+// Add `bodyParser` middleware which will parse JSON requests
+// into JS objects before they reach the route files.
+//
+// The method `.use` sets up middleware for the Express application
+app.use(express.json());
 
-//another app.get (to get ONE product only by ID)
-app.get("/ProductById", (req, res) => {
-  console.log(req.query.id);
-  console.log("GET /getById");
-  Product.findById(req.query.id, function (err, result) {
-    if (err) {
-      console.log("ERR: ", err);
-    } else {
-      console.log(result);
-      res.json(result);
-    }
-  });
-});
+const reactPort = 3000;
+// Set CORS headers on response from this API using the `cors` NPM package.
+// app.use(
+//   cors({ origin: process.env.CLIENT_ORIGIN || `http://localhost:${reactPort}` })
+// );
 
-/* ============================================== */
-//NAJD
-app.post("/product", (req, res) => {
-  console.log("POST /product");
-  console.log("BODY: ", req.body);
+/*** Routes ***/
 
-  Product.create(req.body, (err, newProduct) => {
-    if (err) {
-      console.log("ERR: ", err);
-    } else {
-      console.log(newProduct);
-      res.json(newProduct);
-    }
-  });
-});
+// Mount imported Routers
+app.use(productRouter);
+// app.use(userRouter);
 
 
-/* ============================================== */
-//MHMD
-
-app.put('/product/:id', (req, res) => {
-
-  Product.findOneAndUpdate({ _id: req.params.id }, req.body, (err, result) => {
-    if (err) {
-      res.json(err);
-    } else {
-      res.json(result);
-    }
-  });
-});
-
-
-/* ============================================== */
-//RAGHAD
-app.delete('/product/:id', (req, res) => {
-  console.log('PARAMS:', req.params);
-  // mongoose.Types.ObjectId ('4ed3ede8844f0f351100000c')
-  Product.findOneAndDelete({ _id: req.params.id }, (err, result) => {
-    if (err) {
-      res.json(err);
-    } else {
-      res.json(result);
-    }
-  });
-});
 
 /* ============================================== */
 

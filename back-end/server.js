@@ -1,66 +1,59 @@
-const express = require('express');
+const express = require("express");
 const app = express();
-const mongoose = require('mongoose');
-
-
-console.log(favFood);
-
-const {  Product } = require('./models/product.js');
+const mongoose = require("mongoose");
+const Product = require("./models/product.js");
 app.use(express.json());
-
 
 /* ============================================== */
 // to can see the body from req instead of undefined
 app.use(express.json());
-
-mongoose.connect('mongodb://localhost:27017/mongooseAssociationsInClass', {
-mongoose.connect('mongodb://localhost:27017/products', {
-
+mongoose.connect("mongodb://localhost:27017/tech", {
   useNewUrlParser: true,
 });
-mongoose.connection.once('open', () => {
-  console.log('DB IS CONNECTED :)');
+mongoose.connection.once("open", () => {
+  console.log("DB IS CONNECTED !!!");
 });
 /* ============================================== */
 
-app.get('/', (req, res) => {
-  console.log('GET /');
-  res.json('SERVER IS WORKING :P');
+app.get("/", (req, res) => {
+  console.log("GET /");
+  res.json("SERVER IS WORKING :P");
 });
 
-
-//MESHAL: write the code for app.get (to get all the products) 
-
-
-//get all prouct 
-app.get('/product', (req, res) => {
-    console.log('GET /product');
-    Product.find({}, function (err, data) {
-      res.json(data);
-    });
+//MESHAL: write the code for app.get (to get all the products)
+//get all prouct
+app.get("/product", (req, res) => {
+  console.log("GET /product");
+  Product.find({}, function (err, data) {
+    res.json(data);
   });
+});
 
 //another app.get (to get ONE product only by ID)
-
-app.get('/getById', (req, res) => {
-    console.log(req.query.id);
-    console.log('GET /getById');
-    Product.findById(req.query.id, function (err, result) {
-      if (err) {
-        res.send(err);
-
+app.get("/ProductById", (req, res) => {
+  console.log(req.query.id);
+  console.log("GET /getById");
+  Product.findById(req.query.id, function (err, result) {
+    if (err) {
+      console.log("ERR: ", err);
+    } else {
+      console.log(result);
+      res.json(result);
+    }
+  });
+});
 
 /* ============================================== */
+//NAJD
+app.post("/product", (req, res) => {
+  console.log("POST /product");
+  console.log("BODY: ", req.body);
 
-app.post('/api/product', (req, res) => {
-  console.log('POST /product');
-  console.log('BODY: ', req.body);
-
-Product.create(req.body, (err, newProduct) => {
+  Product.create(req.body, (err, newProduct) => {
     if (err) {
-      console.log('ERR: ', err);
+      console.log("ERR: ", err);
     } else {
-       console.log(newProduct)
+      console.log(newProduct);
       res.json(newProduct);
     }
   });
@@ -68,33 +61,37 @@ Product.create(req.body, (err, newProduct) => {
 
 
 /* ============================================== */
+//MHMD
 
+app.put('/product/:id', (req, res) => {
 
-
-app.delete('/deletePro/', (req, res) => {
-
-  console.log('product ID: ', req.body.productId);
-
-  Product.findById(req.body.productId , (err, foundproduct) => {
-    console.log('FOUND USER: ', foundproduct);
-    foundproduct._id(req.body.productId).remove();
-    foundproduct.save((err, result) => {
-      if (err) {
-        console.log('ERR: ', err);
-
-      } else {
-        res.json(result);
-      }
-    });
+  Product.findOneAndUpdate({ _id: req.params.id }, req.body, (err, result) => {
+    if (err) {
+      res.json(err);
+    } else {
+      res.json(result);
+    }
   });
-
 });
 
+
+/* ============================================== */
+//RAGHAD
+app.delete('/product/:id', (req, res) => {
+  console.log('PARAMS:', req.params);
+  // mongoose.Types.ObjectId ('4ed3ede8844f0f351100000c')
+  Product.findOneAndDelete({ _id: req.params.id }, (err, result) => {
+    if (err) {
+      res.json(err);
+    } else {
+      res.json(result);
+    }
+  });
+});
 
 /* ============================================== */
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log('SERVER IS WORKING ON http://localhost:' + PORT);
+  console.log("SERVER IS WORKING ON http://localhost:" + PORT);
 });
-

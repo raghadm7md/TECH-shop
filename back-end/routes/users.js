@@ -51,6 +51,19 @@ router.delete('/user/order', (req, res) => {
     });
   });
 });
+/* ============================================== */
+//Meshal
 
+
+router.put('/user/:id', (req, res) => {
+
+  User.findOneAndUpdate({ _id: req.params.id }, req.body, (err, result) => {
+    if (err) {
+      res.json(err);
+    } else {
+      res.json(result);
+    }
+  });
+});
 
 module.exports=router; 

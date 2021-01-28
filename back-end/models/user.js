@@ -12,7 +12,7 @@ const orderSchema = new mongoose.Schema({
 const userSchema = new mongoose.Schema({
   name:{type : String , required:true , trim: true},
   password:{type:String, require:true },
-  email:{type: String , require:true },
+  email:{type: String , require:true , unique:true} ,
   isAdmin:{type:Boolean , required:true, default:false },
   Address:{
     country: String,
@@ -36,3 +36,6 @@ module.exports = {
   // Order,
   Order: Order,
 };
+
+
+

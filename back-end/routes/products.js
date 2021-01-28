@@ -15,7 +15,7 @@ mongoose.connection.once("open", () => {
 /* ============================================== */
 
 router.get("/testProducts", (req, res) => {
-  console.log("GET /");
+  console.log("GET from route prod");
   res.json("SERVER IS WORKING from products/js");
 });
 

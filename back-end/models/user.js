@@ -2,8 +2,10 @@ const mongoose = require('mongoose');
 
 const orderSchema = new mongoose.Schema({
   total: {type: Number},
-  date: {type: String},
+  // date: {type: String},
   products_ID: {type: String},
+},{
+  timestamps: true,
 });
 
 

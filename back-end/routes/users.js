@@ -29,6 +29,19 @@ router.get("/user", (req, res) => {
   });
 });
 
+
+//to make sure about the email & pass
+// router.get("/user/login", (req, res) => {
+//   console.log("GET /user/login");
+//   User.find({}, function (err, data) {
+//     res.json(data);
+//   });
+// });
+
+
+
+
+
 //another app.get (to get ONE user only by ID)
 router.get("/userById", (req, res) => {
   console.log(req.query.id);

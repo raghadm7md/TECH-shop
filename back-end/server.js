@@ -1,7 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 // const Product = require("./models/product.js");
-// const cors = require('cors');
+const cors = require('cors');
 // Require Route Files
 const productRouter = require('./routes/products');
 const userRouter = require('./routes/users');
@@ -33,9 +33,9 @@ app.use(express.json());
 
 const reactPort = 3000;
 // Set CORS headers on response from this API using the `cors` NPM package.
-// app.use(
-//   cors({ origin: process.env.CLIENT_ORIGIN || `http://localhost:${reactPort}` })
-// );
+app.use(
+  cors({ origin: process.env.CLIENT_ORIGIN || `http://localhost:${reactPort}` })
+);
 
 /*** Routes ***/
 

@@ -8,6 +8,8 @@ export default class Products extends Component {
 
   
   componentDidMount() {
+    console.log("Component DID MOUNT!");
+
     getAllProducts()
       .then((response) => {
         console.log("RESSSS: ", response.data);
@@ -17,6 +19,10 @@ export default class Products extends Component {
         console.log("API ERROR:", error);
       });
   }
+  componentWillUnmount(){
+    
+  }
+
 
   render() {
     const allProducts = this.props.prods.map((elem, index) => {

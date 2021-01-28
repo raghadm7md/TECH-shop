@@ -2,6 +2,10 @@ import React, { Component } from "react";
 
 
 export default class Product extends Component {
+
+  componentDidMount (){
+    
+  }
   render() {
     return (
       <div>

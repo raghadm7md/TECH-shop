@@ -5,9 +5,7 @@ export default class cover extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-
-    };
+    this.state = {};
   }
 
   render() {
@@ -16,19 +14,18 @@ export default class cover extends Component {
     // console.log(this.props.cover)
 
     const coverProdcut = this.props.covers.map((elem, index) => {
-    //   console.log(this.state.cover[index]);
+      //   console.log(this.state.cover[index]);
       if (this.props.covers[index].type === "cover") {
-          console.log(this.props.covers[index].type)
+        console.log(this.props.covers[index].type);
         return (
-          <h1>
-            {" "}
-            name={elem.name} price={elem.price}{" "} 
-          </h1>
+          <div>
+            <h2>name: {elem.name}</h2>
+             <h4>price: {elem.price}</h4>
+          </div>
         );
       }
     });
 
-    return <div>      {coverProdcut}
-    </div> 
+    return <div> {coverProdcut}</div>;
   }
 }

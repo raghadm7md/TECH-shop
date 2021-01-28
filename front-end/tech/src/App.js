@@ -4,6 +4,10 @@ import Products from "./components/Products";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { Navbar, Nav, Form, FormControl, Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
+// import { getAllProducts, getAllUsers } from "../api";
+import Cover from "./product/cover";
+import PowerBanks from "./product/powerBank";
+import Cables from "./product/cable";
 import Login from "./components/Login";
 import HomePage from "./components/HomePage";
 
@@ -22,9 +26,48 @@ export default class App extends Component {
     this.setState({ products: newProd });
   };
 
+
   render() {
+    console.log(this.state.products);
+
     return (
       <Router>
+
+      //////////////////prod branch
+        <div className="App">
+          <nav class="navbar">
+            <Link to="/cover">
+              <button class="ButtonStyleSec"> covers </button>{" "}
+            </Link>
+            <Link to="/powerBank">
+              <button class="ButtonStyleSec"> power Banks</button>
+            </Link>
+            <Link to="/cable">
+              <button class="ButtonStyleSec"> Cables </button>{" "}
+            </Link>
+          </nav>
+
+          <Route
+            exact
+            path="/cover"
+            render={(props) => (
+              <Cover {...props} covers={this.state.products} />
+            )}
+          />
+
+          <Route exact path="/powerBank"  render={(props) => (
+              <PowerBanks {...props} powerBanks={this.state.products} />
+            )}/>
+          <Route exact path="/cable" render={(props) => (
+              <Cables {...props} cables={this.state.products} />
+            )}/>
+
+          <h1>WELCOME</h1>
+          <Products
+            prods={this.state.products}
+            setProducts={this.funcSetProducts}
+          />
+/////////////////HALF
         <div>
           <Navbar bg="light" variant="light">
             <Navbar.Brand href="#home">Navbar</Navbar.Brand>
@@ -65,6 +108,7 @@ export default class App extends Component {
             <Route path="/login" component={() => <Login />}></Route>
             
           </Switch>
+/////////////MASTER
         </div>
       </Router>
     );

@@ -19,9 +19,7 @@ export default class Products extends Component {
         console.log("API ERROR:", error);
       });
   }
-  componentWillUnmount(){
-    
-  }
+
 
 
   render() {

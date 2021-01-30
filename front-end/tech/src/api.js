@@ -8,9 +8,13 @@ const getAllProducts = () => {
   return axios.get(`${API_URL}/product`);
 };
 
+const getAllCovers = () => {
+  return axios.get(`${API_URL}/product/covers`);
+};
+
 // Delete products by ID
 const getAllUsers = (id) => {
   return axios.get(`${API_URL}/user`);
 }
 
-export { getAllProducts, getAllUsers };
+export { getAllProducts, getAllUsers ,getAllCovers};

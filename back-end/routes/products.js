@@ -28,7 +28,16 @@ router.get("/product", (req, res) => {
   });
 });
 
-//another app.get (to get ONE product only by ID)
+//MHMD: UNUSED ROUTE / MAY USE LATER / WORKING FINE 
+router.get("/product/covers", (req, res) => {
+  console.log("GET /product");
+  Product.find({type: "cover"}, function (err, data) {
+    res.json(data);
+  });
+});
+
+
+//MESHAL: another app.get (to get ONE product only by ID)
 router.get("/ProductById", (req, res) => {
   console.log(req.query.id);
   console.log("GET /getById");

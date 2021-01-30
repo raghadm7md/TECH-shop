@@ -30,19 +30,19 @@ export default class App extends Component {
     return (
       <Router>
         {/* //////////////////prod branch */}
-        <div className="App">
+        <div className="">
           {/* /////////////////HALF */}
           <div>
-            <Navbar bg="light" variant="light">
-              <Navbar.Brand href="#home">Navbar</Navbar.Brand>
+            <Navbar bg="light" variant="light" sticky="top">
+              <Navbar.Brand href="#home">TECH</Navbar.Brand>
               <Nav className="mr-auto">
                 <Nav.Link as={Link} to="/">
                   Home
                 </Nav.Link>
-                <Nav.Link as={Link} to="/allproducts">
-                  All Products
-                </Nav.Link>
-                <Nav.Link as={Link} to="/powerbanks">
+                <Nav.Link className="mr-5"as={Link} to="/allproducts">
+                  All Products 
+                </Nav.Link> 
+                <Nav.Link className="ml-3"as={Link} to="/powerbanks">
                   Power Banks
                 </Nav.Link>
                 <Nav.Link as={Link} to="/covers">
@@ -69,11 +69,12 @@ export default class App extends Component {
               </Form>
             </Navbar>
             <Switch>
+            <div  className="container"> 
               <Route exact path="/" render={() => <HomePage />}></Route>
-
+              
               <Route
                 path="/allproducts"
-                component={() => (
+                render={() => (
                   <Products
                     prods={this.state.products}
                     setProducts={this.funcSetProducts}
@@ -104,6 +105,7 @@ export default class App extends Component {
                 )}
               />
               <Route path="/login" component={() => <Login />}></Route>
+              </div>
             </Switch>
             {/* /////////////MASTER */}
           </div>

@@ -10,6 +10,7 @@ import PowerBanks from "./product/powerBank";
 import Cables from "./product/cable";
 import Login from "./components/Login";
 import HomePage from "./components/HomePage";
+import Profile from "./components/Profile"
 
 export default class App extends Component {
   constructor(props) {
@@ -51,7 +52,12 @@ export default class App extends Component {
                 <Nav.Link as={Link} to="/cables">
                   Cables
                 </Nav.Link>
+                 {/* ######################## profile ##################### */}
+                <Nav.Link as={Link} to="/profile">
+                  My Account
+                </Nav.Link>
               </Nav>
+              
               <Form inline>
                 <FormControl
                   type="text"
@@ -102,6 +108,12 @@ export default class App extends Component {
                 render={(props) => (
                   <Cables {...props} cables={this.state.products} />
                 )}
+              />
+              {/* ######################## profile ##################### */}
+               <Route
+                exact
+                path="/profile"
+                component={Profile}
               />
               <Route path="/login" component={() => <Login />}></Route>
             </Switch>

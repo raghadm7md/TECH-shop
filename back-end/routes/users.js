@@ -38,6 +38,43 @@ router.get("/user", (req, res) => {
 //   });
 // });
 
+//registertion 
+
+router.post('/register',(req,res)=>{
+  let name= req.body.name;
+  let password=req.body.password;
+  let email=req.body.email;
+
+  const newuser= new User();
+  newuser.name=name;
+  newuser.password=password;
+  newuser.email=email;
+  newuser.save((err,savedUser)=>{
+    if(err){
+      console.log(err);
+      return res.status(500).send();
+    }
+    return res.status(200).send();
+  })
+});
+
+
+
+//login 
+router.post('/login',(req,res)=>{
+  let email=req.body.email;
+  let password= req.body.password;
+  User.findOne({email:email, password:password },(err,User)=>{
+    if(err){
+      console.log(err);
+      return res.status(500).send();
+    }
+    if(!User){
+      return res.status(404).send();
+    }
+    return res.status(200).send();
+  })
+})
 
 
 

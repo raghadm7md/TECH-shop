@@ -34,7 +34,7 @@ export default class cover extends Component {
     // console.log(this.state.cover.name)
     // console.log(this.state.cover[1]);
     // console.log(this.props.cover)
-
+    console.log("maged is trashik");
     const coverProdcut = this.props.covers.map((elem, index) => {
       //   console.log(this.state.cover[index]);
       if (this.props.covers[index].type === "cover") {

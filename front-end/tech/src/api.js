@@ -28,9 +28,9 @@ const getAllUsers = (id) => {
 
 
 //////////////////NAJD
-// const login=()=>{
-//   return axios.post(`${API_URL}/login`)
-// }
+const login=()=>{
+  return axios.post(`${API_URL}/login`)
+}
 
 // ###################### EditUser
 const EditUser = (id,info) => {

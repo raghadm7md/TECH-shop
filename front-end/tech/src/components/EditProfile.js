@@ -26,7 +26,10 @@ export default class EditProfile extends Component {
         houseNumber: this.state.houseNumber,
             }
     };
-    EditUser("6015c8b9b925561a01028844",info)
+
+
+    //////CHANGED ID TO DYN
+    EditUser("601215778a54474f64569c20",info)
       .then((response) => {
         console.log("user: ", response.data);
 

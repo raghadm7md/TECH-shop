@@ -23,7 +23,7 @@ export default class App extends Component {
     this.state = {
       products: [],
 
-      searchValue: ""
+      searchValue: "",
 
       covers:[],
       powerbanks:[],
@@ -130,35 +130,11 @@ export default class App extends Component {
                   )}
                 ></Route>
 
-                <Route
-                  exact
-                  path="/covers"
-                  render={(props) => (
-                    <Cover {...props} covers={this.state.products} />
-                  )}
-                />
-
-                <Route
-                  exact
-                  path="/powerbanks"
-                  render={(props) => (
-                    <PowerBanks {...props} powerBanks={this.state.products} />
-                  )}
-                />
-                <Route
-                  exact
-                  path="/cables"
-                  render={(props) => (
-                    <Cables {...props} cables={this.state.products} />
-                  )}
-                />
-                {/* ######################## profile ##################### */}
-                <Route exact path="/profile" component={Profile} />
-
+               
 
                 <Route path="/search" render={(props) => <Search {...props} search={this.state.products}/>}></Route>
 
-                <Route path="/login" component={() => <Login />}></Route>
+                
                 {/* <Route path="/Search" component={() => <Search />}></Route> */}
 
               <Route

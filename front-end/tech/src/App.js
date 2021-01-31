@@ -24,7 +24,7 @@ export default class App extends Component {
       products: [],
 
       searchValue: "",
-
+      isLoggedIn:false,
       covers:[],
       powerbanks:[],
       cables:[]
@@ -165,7 +165,7 @@ export default class App extends Component {
                 path="/profile"
                 component={Profile}
               />
-              <Route path="/login" component={() => <Login />}></Route>
+              <Route path="/login" component={() => <Login isLoggedIn={this.state.isLoggedIn} />}></Route>
 
               <Route
                 exact

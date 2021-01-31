@@ -46,6 +46,13 @@ app.use(productRouter);
 app.use(userRouter);
 
 
+// app.use(function(req,res,next){
+//   res.header("Access-Cotrol-Allow-Origin","*");
+//   res.header("Access-Cotrol-Allow-Header","Origin ,X-Requested-With" ,
+//   "Content-Type", "Accept");
+//   res.header("Access-Cotrol-Allow-Methods",'PUT ,GET ,DELETE ,OPTIONS');
+//   next();
+//   });
 
 /* ============================================== */
 
@@ -53,3 +60,5 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log("SERVER IS WORKING ON http://localhost:" + PORT);
 });
+
+

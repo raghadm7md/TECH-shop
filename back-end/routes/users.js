@@ -64,15 +64,19 @@ router.post('/register',(req,res)=>{
 router.post('/login',(req,res)=>{
   let email=req.body.email;
   let password= req.body.password;
-  User.findOne({email:email, password:password },(err,User)=>{
+  User.findOne({email:email, password:password},(err,User1)=>{
+    console.log("ttttttt",User1);
     if(err){
       console.log(err);
-      return res.status(500).send();
+      return res.status(500).send({message : "IIIIIIII"});
     }
-    if(!User){
-      return res.status(404).send();
+    if(!User1){
+      console.log("OOOOOO");
+      return res.status(401).send({message : "ERRRRR"});
+    }else {
+      console.log("RRRRRRR");
+      return res.status(200).send({message : "OK, SUCCESS", success:true});
     }
-    return res.status(200).send();
   })
 })
 

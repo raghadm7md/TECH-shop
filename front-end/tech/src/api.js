@@ -28,8 +28,11 @@ const getAllUsers = (id) => {
 
 
 //////////////////NAJD
-const login=()=>{
-  return axios.post(`${API_URL}/login`)
+const login=(req)=>{
+  return axios.post(`${API_URL}/login`,{
+    email:req.email,
+    password:req.password
+  })
 }
 
 // ###################### EditUser
@@ -41,5 +44,5 @@ const EditUser = (id,info) => {
 
 
 
-export { getAllProducts, getAllUsers ,getAllCovers,getAllPowerBanks,getAllCables, EditUser};
+export { getAllProducts, getAllUsers ,getAllCovers,getAllPowerBanks,getAllCables, EditUser,login };
 

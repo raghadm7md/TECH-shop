@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { Navbar, Nav, Form, FormControl, Button } from "react-bootstrap";
-import axios from 'axios';
-//import login from '../api'
-
+// import axios from 'axios';
+import { login } from "../api";
+import HomePage from './HomePage'
 export default class Login extends Component {
   constructor(props) {
     super(props);
@@ -10,6 +10,7 @@ export default class Login extends Component {
     this.state = {
       email: "",
       password: "",
+      redirectLogin: false
     };
   }
 
@@ -19,20 +20,33 @@ export default class Login extends Component {
   //   //if this.state.password == the password that this.state.email have => SUCCESS
   // }
 
-  login=(e)=>{
+  loginFunc=(e)=>{
     e.preventDefault();
     console.log("EENTEREREREREAED");
-    let req={
-      Email:this.state.email , 
-      pass:this.state.password 
+    let reqq={
+      email:this.state.email , 
+      password:this.state.password 
     }
-    axios.post('http://localhost:3000/login',req)
-    .then(resp=>{
-      alert(resp.data.message);
+    console.log("pppppp ",reqq);
+
+
+    login(reqq)
+    .then((response)=>{
+      alert(response.data.message);
+      if(response.data.success){
+
+        this.setState({redirectLogin:true})
+
+      }else{
+        
+      }
     })
     .catch(err=> {
       console.log(err)
     })
+
+
+    
   }
 
   funcccc = () =>{
@@ -40,7 +54,9 @@ export default class Login extends Component {
   }
 
   render() {
-    
+    if(this.state.redirectLogin) {
+        return <HomePage to={'/allproducts'}/>
+    }
     return (
       <div>
         <Form >
@@ -68,7 +84,7 @@ export default class Login extends Component {
             />
           </Form.Group>
         </Form>
-        <Button onClick={(e)=>{this.login(e)}}>Submit</Button>
+        <Button onClick={(e)=>{this.loginFunc(e)}}>Submit</Button>
 
       </div>
     );

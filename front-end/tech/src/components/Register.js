@@ -1,45 +1,47 @@
 import React, { Component } from "react";
 import { Navbar, Nav, Form, FormControl, Button } from "react-bootstrap";
-import axios from 'axios';
+import {registeration} from "../api.js"
+
+import Login from "./Login";
 export default class Register extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      Name:"",
+      name: "",
       email: "",
       password: "",
+      redirectReg: false
     };
   }
+  register = (e) =>{
+    e.preventDefault();
+    let req = {
+      name: this.state.name,
+      email:this.state.email,
+      password: this.state.password,
+    };
+    console.log("TTTTTTTTTTTTTTTTT")
+    registeration(req)
+      .then((resp) => {
+        alert(resp.data.message);
 
+       console.log(resp.data)
 
-//   submitLogin = () => {
-//     console.log("INSIDE THE SUBMITLOGIN");
-//     //if this.state.password == the password that this.state.email have => SUCCESS
-//   }
-
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   render() {
-    register=(e)=>{
-      e.preventDefulte();
-      let req={
-        name:Name,
-        Email:email , 
-        pass:password 
-      }
-      axios.post('htpp://localhost:3000/register',req)
-      .then(resp=>{
-        alert(resp.data.message);
-      })
-      .catch(err=> {
-        console.log(err)
-      })
-
-    }
+    if(this.state.redirectLogin) {
+      return <Login to={'/login'}/>
+  }
     return (
       <div>
-        <Form >
-        <Form.Group controlId="formBasicEmail">
+        <Form>
+          <Form.Group controlId="formBasicEmail">
             <Form.Label>Your full name </Form.Label>
             <Form.Control
               type="text"
@@ -73,11 +75,18 @@ export default class Register extends Component {
               }}
             />
           </Form.Group>
-          <Button variant="primary" type="submit" onSubmit={(e)=>{register(e)}}
+          
+        </Form>
+        <Button
+      
+            variant="primary"
+            type="submit"
+            onClick={(e) => {
+              this.register(e);
+            }}
           >
             Submit
           </Button>
-        </Form>
       </div>
     );
   }

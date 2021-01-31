@@ -29,7 +29,7 @@ export default class EditProfile extends Component {
 
 
     //////CHANGED ID TO DYN
-    EditUser("601215778a54474f64569c20",info)
+    EditUser("6016ae20342b766f74c96bf6",info)
       .then((response) => {
         console.log("user: ", response.data);
 

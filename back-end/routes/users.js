@@ -52,9 +52,9 @@ router.post('/register',(req,res)=>{
   newuser.save((err,savedUser)=>{
     if(err){
       console.log(err);
-      return res.status(500).send();
+      return res.status(500).send({message: "Error"});
     }
-    return res.status(200).send();
+    return res.status(200).send({message:"OK "});
   })
 });
 

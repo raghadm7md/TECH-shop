@@ -12,7 +12,7 @@ import Login from "./components/Login";
 import HomePage from "./components/HomePage";
 import Profile from "./components/Profile";
 import Search from "./components/Search";
-
+import Register from "./components/Register"
 import AddProd from "./components/AddProd";
 
 
@@ -22,7 +22,6 @@ export default class App extends Component {
 
     this.state = {
       products: [],
-
       searchValue: "",
       isLoggedIn:false,
       covers:[],
@@ -134,6 +133,7 @@ export default class App extends Component {
                     />
                   )}
                 ></Route>
+                
 
                
 
@@ -155,6 +155,13 @@ export default class App extends Component {
                 path="/powerbanks"
                 render={(props) => (
                   <PowerBanks {...props} powerBanks={this.state.powerbanks} setPowerbank={this.funcSetPowerBank}/>
+                )}
+              />
+              <Route
+                exact
+                path="/Register"
+                render={(props) => (
+                  <Register {...props}/>
                 )}
               />
               <Route

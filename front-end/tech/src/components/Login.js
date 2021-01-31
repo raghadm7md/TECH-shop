@@ -89,6 +89,8 @@ export default class Login extends Component {
         </Form>
         <Button onClick={(e)=>{this.loginFunc(e)}}>Submit</Button>
 
+        <h4>You dont have account ? <a href='./Register'> register now </a></h4>
+
       </div>
     );
   }

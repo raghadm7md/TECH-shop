@@ -34,6 +34,9 @@ const login=(req)=>{
     password:req.password
   })
 }
+const registeration=(req)=>{
+  return axios.post(`${API_URL}/register`,req)
+}
 // ###################### EditUser
 const EditUser = (id,info) => {
   console.log(info)
@@ -47,5 +50,5 @@ const addProduct = (info) => {
 
 
 
-export { getAllProducts, getAllUsers ,getAllCovers,getAllPowerBanks,getAllCables, EditUser,login , addProduct};
+export { getAllProducts, getAllUsers ,getAllCovers,getAllPowerBanks,getAllCables,registeration, EditUser,login, addProduct};
 

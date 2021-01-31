@@ -16,5 +16,10 @@ const getAllCovers = () => {
 const getAllUsers = (id) => {
   return axios.get(`${API_URL}/user`);
 }
+// ###################### EditUser
+const EditUser = (id,info) => {
+  console.log(info)
+  return axios.put(`${API_URL}/user/${id}`, info);
+}
 
-export { getAllProducts, getAllUsers ,getAllCovers};
+export { getAllProducts, getAllUsers ,getAllCovers , EditUser};

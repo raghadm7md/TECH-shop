@@ -1,24 +1,43 @@
 import React, { Component } from "react";
 import { Navbar, Nav, Form, FormControl, Button } from "react-bootstrap";
+import {EditUser} from "../api";
+
 
 export default class EditProfile extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
-      username: "",
+      name: "",
       email: "",
-      phone: "",
-      password: "",
-      country:"",
-      city:""
+      country: "",
+      city: "",
+      houseNumber: "",
     };
   }
 
   submitInfo = (event) => {
     event.preventDefault();
-    // this.props.Update(this.state.username);
-    this.props.hide();
+    let info = {
+      name: this.state.name,
+      email: this.state.email,
+      Address: {
+        country: this.state.country,
+        city: this.state.city,
+        houseNumber: this.state.houseNumber,
+            }
+    };
+    EditUser("6015c8b9b925561a01028844",info)
+      .then((response) => {
+        console.log("user: ", response.data);
+
+      })
+      .catch((error) => {
+        console.log('API ERROR:', error);
+      });
+
+      this.props.EditInfo(info);
+      this.props.hide();
+
   };
 
   render() {
@@ -32,7 +51,7 @@ export default class EditProfile extends Component {
               placeholder="Username"
               onChange={(e) => {
                 console.log("CHANGE: ", e.target.value);
-                this.setState({ username: e.target.value });
+                this.setState({ name: e.target.value });
               }}
             />
           </Form.Group>
@@ -48,47 +67,36 @@ export default class EditProfile extends Component {
             />
           </Form.Group>
           <Form.Group controlId="formBasicEmail">
-            <Form.Label>Phone number</Form.Label>
+            <h3>Address</h3>
+            <Form.Group controlId="formBasicPassword">
+              <Form.Label>Country</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Saudi Arabia"
+                onChange={(e) => {
+                  console.log("CHANGE: ", e.target.value);
+                  this.setState({ country: e.target.value });
+                }}
+              />
+            </Form.Group>
+            <Form.Group controlId="formBasicPassword">
+              <Form.Label>City</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="makkah"
+                onChange={(e) => {
+                  console.log("CHANGE: ", e.target.value);
+                  this.setState({ city: e.target.value });
+                }}
+              />
+            </Form.Group>
+            <Form.Label>House Number</Form.Label>
             <Form.Control
-              type="tel"
-              placeholder="966000000000"
+              type="Number"
+              placeholder="Ex: 1 "
               onChange={(e) => {
                 console.log("CHANGE: ", e.target.value);
-                this.setState({ phone: e.target.value });
-              }}
-            />
-          </Form.Group>
-          <Form.Group controlId="formBasicPassword">
-            <Form.Label>Password</Form.Label>
-            <Form.Control
-              type="password"
-              placeholder="Password"
-              onChange={(e) => {
-                console.log("CHANGE: ", e.target.value);
-                this.setState({ password: e.target.value });
-              }}
-            />
-          </Form.Group>
-          <h3>Address</h3>
-          <Form.Group controlId="formBasicPassword">
-            <Form.Label>Country</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Saudi Arabia"
-              onChange={(e) => {
-                console.log("CHANGE: ", e.target.value);
-                this.setState({ country: e.target.value });
-              }}
-            />
-          </Form.Group>
-          <Form.Group controlId="formBasicPassword">
-            <Form.Label>City</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="makkah"
-              onChange={(e) => {
-                console.log("CHANGE: ", e.target.value);
-                this.setState({ city: e.target.value });
+                this.setState({ houseNumber: e.target.value });
               }}
             />
           </Form.Group>

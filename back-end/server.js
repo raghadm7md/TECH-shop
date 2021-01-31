@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 // const Product = require("./models/product.js");
 const cors = require('cors');
 // Require Route Files
+const bodyParser=require("body-parser");
 const productRouter = require('./routes/products');
 const userRouter = require('./routes/users');
 
@@ -17,7 +18,8 @@ mongoose.connection.once('open', () => {
 
 // Instantiate Express Application Object
 const app = express();
-
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended:true}))
 /* ============================================== */
 
 // app.get("/", (req, res) => {

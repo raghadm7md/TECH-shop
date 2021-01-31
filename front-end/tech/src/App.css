@@ -42,3 +42,23 @@ body{
 }
 
 
+
+.red {
+  color:red
+}
+.blue {
+  color:blue
+}
+
+.bgred {
+  background-color:red
+}
+
+.price{
+  font-size: 25px;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  pointer-events: all !important;
+}

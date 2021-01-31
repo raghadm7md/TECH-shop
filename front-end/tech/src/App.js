@@ -11,6 +11,7 @@ import Cables from "./product/cable";
 import Login from "./components/Login";
 import HomePage from "./components/HomePage";
 import Profile from "./components/Profile"
+import AddProd from "./components/AddProd";
 
 export default class App extends Component {
   constructor(props) {
@@ -18,6 +19,9 @@ export default class App extends Component {
 
     this.state = {
       products: [],
+      covers:[],
+      powerbanks:[],
+      cables:[]
     };
   }
 
@@ -25,14 +29,24 @@ export default class App extends Component {
     this.setState({ products: newProd });
   };
 
+  funcSetCvr = (newCvr) => {
+    this.setState({ covers: newCvr });
+  };
+
+  funcSetPowerBank = (newPwr) => {
+    this.setState({ powerbanks: newPwr });
+  };
+
+  funcSetCable = (newCbl) => {
+    this.setState({ cables: newCbl });
+  };
+
   render() {
     console.log(this.state.products);
 
     return (
       <Router>
-        {/* //////////////////prod branch */}
         <div className="">
-          {/* /////////////////HALF */}
           <div>
             <Navbar bg="light" variant="light" sticky="top">
               <Navbar.Brand href="#home">TECH</Navbar.Brand>
@@ -52,13 +66,16 @@ export default class App extends Component {
                 <Nav.Link as={Link} to="/cables">
                   Cables
                 </Nav.Link>
-                 {/* ######################## profile ##################### */}
                 <Nav.Link as={Link} to="/profile">
                   My Account
+                </Nav.Link>
+                <Nav.Link as={Link} to="/addprod">
+                  ADD PROD
                 </Nav.Link>
               </Nav>
               
               <Form inline>
+              
                 <FormControl
                   type="text"
                   placeholder="Search"
@@ -92,7 +109,7 @@ export default class App extends Component {
                 exact
                 path="/covers"
                 render={(props) => (
-                  <Cover {...props} covers={this.state.products} />
+                  <Cover {...props} covers={this.state.covers} setCvr={this.funcSetCvr} />
                 )}
               />
 
@@ -100,14 +117,14 @@ export default class App extends Component {
                 exact
                 path="/powerbanks"
                 render={(props) => (
-                  <PowerBanks {...props} powerBanks={this.state.products} />
+                  <PowerBanks {...props} powerBanks={this.state.powerbanks} setPowerbank={this.funcSetPowerBank}/>
                 )}
               />
               <Route
                 exact
                 path="/cables"
                 render={(props) => (
-                  <Cables {...props} cables={this.state.products} />
+                  <Cables {...props} cables={this.state.cables} setCables={this.funcSetCable} />
                 )}
               />
               {/* ######################## profile ##################### */}
@@ -117,6 +134,14 @@ export default class App extends Component {
                 component={Profile}
               />
               <Route path="/login" component={() => <Login />}></Route>
+
+              <Route
+                exact
+                path="/addprod"
+                render={() => (
+                  <AddProd />
+                )}
+              />
               </div>
             </Switch>
             {/* /////////////MASTER */}

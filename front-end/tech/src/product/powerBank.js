@@ -1,24 +1,50 @@
 import React, { Component } from "react";
+import ProdCard from './ProdCard'
+import { CardGroup } from "react-bootstrap";
+import { getAllPowerBanks } from "../api";
 
 export default class powerBank extends Component {
-  render() {
-    // console.log(this.state.cover.name)
-    // console.log(this.state.cover[1]);
-    // console.log(this.props.cover)
+  constructor(props) {
+    super(props)
+  
+    this.state = {
+       
+    }
+  }
+  
+  componentDidMount() {
+    console.log("Component DID MOUNT pwr!");
 
+    getAllPowerBanks()
+      .then((response) => {
+        console.log("pwr", response.data);
+        // this.props.setProducts(response.data);
+        // this.setState({ covers: [...this.state.covers, response.data] });
+        this.props.setPowerbank(response.data)
+      })
+      .catch((error) => {
+        console.log("API ERROR:", error);
+      });
+  }
+
+
+
+
+  render() {
     const PowerBanksProdcut = this.props.powerBanks.map((elem, index) => {
       //   console.log(this.state.cover[index]);
       if (this.props.powerBanks[index].type === "PowerBank") {
-        console.log(this.props.powerBanks[index].type);
         return (
-          <div>
-            <h2>name: {elem.name}</h2>
-             <h4>price: {elem.price}</h4>
-          </div>
+         <ProdCard name={elem.name} price={elem.price}/>
         );
       }
     });
 
-    return <div> {PowerBanksProdcut}</div>;
+    return (
+      <div>
+        <h1 class="display-4">All Power Banks</h1>
+        <CardGroup> {PowerBanksProdcut} </CardGroup>
+      </div>
+    );
   }
 }

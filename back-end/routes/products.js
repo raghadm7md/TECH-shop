@@ -29,9 +29,23 @@ router.get("/product", (req, res) => {
 });
 
 //MHMD: UNUSED ROUTE / MAY USE LATER / WORKING FINE 
-router.get("/product/covers", (req, res) => {
-  console.log("GET /product");
+router.get("/covers", (req, res) => {
+  console.log("GET /cover");
   Product.find({type: "cover"}, function (err, data) {
+    res.json(data);
+  });
+});
+
+router.get("/powerbanks", (req, res) => {
+  console.log("GET /powerbanks");
+  Product.find({type: "PowerBank"}, function (err, data) {
+    res.json(data);
+  });
+});
+
+router.get("/cables", (req, res) => {
+  console.log("GET /cables");
+  Product.find({type: "cable"}, function (err, data) {
     res.json(data);
   });
 });

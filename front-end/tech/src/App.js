@@ -22,8 +22,8 @@ export default class App extends Component {
 
     this.state = {
       products: [],
-
       searchValue: "",
+
       isLoggedIn:false,
       covers:[],
       powerbanks:[],
@@ -59,7 +59,7 @@ export default class App extends Component {
 
 
   render() {
-    console.log(this.state.products);
+    // console.log(this.state.products);
 
     return (
       <Router>
@@ -132,7 +132,7 @@ export default class App extends Component {
 
                
 
-                <Route path="/search" render={(props) => <Search {...props} search={this.state.products}/>}></Route>
+                <Route path="/search" render={(props) => <Search {...props} searchProduct={this.state.products}  result ={this.state.searchValue} />}></Route>
 
                 
                 {/* <Route path="/Search" component={() => <Search />}></Route> */}

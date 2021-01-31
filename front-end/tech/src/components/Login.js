@@ -1,8 +1,12 @@
 import React, { Component } from "react";
 import { Navbar, Nav, Form, FormControl, Button } from "react-bootstrap";
+import axios from 'axios';
+//import login from '../api'
 // import axios from 'axios';
 import { login } from "../api";
 import HomePage from './HomePage'
+
+
 export default class Login extends Component {
   constructor(props) {
     super(props);
@@ -19,6 +23,7 @@ export default class Login extends Component {
   //   console.log("INSIDE THE SUBMITLOGIN");
   //   //if this.state.password == the password that this.state.email have => SUCCESS
   // }
+
 
   loginFunc=(e)=>{
     e.preventDefault();
@@ -45,8 +50,6 @@ export default class Login extends Component {
       console.log(err)
     })
 
-
-    
   }
 
   funcccc = () =>{

@@ -28,12 +28,12 @@ const getAllUsers = (id) => {
 
 
 //////////////////NAJD
+
 const login=(req)=>{
   return axios.post(`${API_URL}/login`,{
     email:req.email,
     password:req.password
   })
-}
 
 // ###################### EditUser
 const EditUser = (id,info) => {
@@ -41,6 +41,7 @@ const EditUser = (id,info) => {
   return axios.put(`${API_URL}/user/${id}`, info);
 }
 /////////////////END NAJD
+
 
 
 

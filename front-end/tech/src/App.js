@@ -38,7 +38,6 @@ export default class App extends Component {
     this.setState({ products: newProd });
   };
 
-
   //search meshal
   handleChange(event) {
     this.setState({ searchValue: event.target.value });
@@ -61,7 +60,6 @@ export default class App extends Component {
   }
 
   render() {
-    console.log(this.state.products);
 
     return (
       <Router>
@@ -103,9 +101,8 @@ export default class App extends Component {
                   placeholder="search"
                   className="mr-sm-2"
                   value={this.state.searchValue}
-                    onChange={(eve)=>{
-                      this.handleChange(eve)
-                    }}
+                  onChange={this.handleChange}
+                    
                 />
                <Link to="Search">
                 <Button variant="outline-primary" className="mr-2">
@@ -137,7 +134,7 @@ export default class App extends Component {
 
                
 
-                <Route path="/search" render={(props) => <Search {...props} searchProduct={this.state.products}/>}></Route>
+                <Route path="/search" render={(props) => <Search {...props} searchProduct={this.state.products} searchValue={this.state.searchValue}/>}></Route>
 
                 
                 {/* <Route path="/Search" component={() => <Search />}></Route> */}

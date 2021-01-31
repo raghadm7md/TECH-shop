@@ -33,7 +33,8 @@ export default class powerBank extends Component {
   render() {
     const PowerBanksProdcut = this.props.powerBanks.map((elem, index) => {
       //   console.log(this.state.cover[index]);
-      if (this.props.powerBanks[index].type === "PowerBank") {
+
+      if (this.props.powerBanks[index].type === "power Bank") {
         return (
          <ProdCard name={elem.name} price={elem.price}/>
         );

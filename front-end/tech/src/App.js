@@ -10,8 +10,11 @@ import PowerBanks from "./product/powerBank";
 import Cables from "./product/cable";
 import Login from "./components/Login";
 import HomePage from "./components/HomePage";
-import Profile from "./components/Profile"
+import Profile from "./components/Profile";
+import Search from "./components/Search";
+
 import AddProd from "./components/AddProd";
+
 
 export default class App extends Component {
   constructor(props) {
@@ -19,16 +22,29 @@ export default class App extends Component {
 
     this.state = {
       products: [],
+
+      searchValue: ""
+
       covers:[],
       powerbanks:[],
       cables:[]
+
     };
+
+    this.handleChange = this.handleChange.bind(this);
+
   }
 
   funcSetProducts = (newProd) => {
     this.setState({ products: newProd });
   };
 
+
+  //search meshal
+  handleChange(event) {
+    this.setState({ searchValue: event.target.value });
+  }
+  
   funcSetCvr = (newCvr) => {
     this.setState({ covers: newCvr });
   };
@@ -40,6 +56,7 @@ export default class App extends Component {
   funcSetCable = (newCbl) => {
     this.setState({ cables: newCbl });
   };
+
 
   render() {
     console.log(this.state.products);
@@ -54,10 +71,10 @@ export default class App extends Component {
                 <Nav.Link as={Link} to="/">
                   Home
                 </Nav.Link>
-                <Nav.Link className="mr-5"as={Link} to="/allproducts">
-                  All Products 
-                </Nav.Link> 
-                <Nav.Link className="ml-3"as={Link} to="/powerbanks">
+                <Nav.Link className="mr-5" as={Link} to="/allproducts">
+                  All Products
+                </Nav.Link>
+                <Nav.Link className="ml-3" as={Link} to="/powerbanks">
                   Power Banks
                 </Nav.Link>
                 <Nav.Link as={Link} to="/covers">
@@ -66,6 +83,9 @@ export default class App extends Component {
                 <Nav.Link as={Link} to="/cables">
                   Cables
                 </Nav.Link>
+
+                {/* ######################## profile ##################### */}
+
                 <Nav.Link as={Link} to="/profile">
                   My Account
                 </Nav.Link>
@@ -73,17 +93,22 @@ export default class App extends Component {
                   ADD PROD
                 </Nav.Link>
               </Nav>
-              
+
               <Form inline>
               
                 <FormControl
                   type="text"
-                  placeholder="Search"
+                  placeholder="search"
                   className="mr-sm-2"
+                  value={this.state.searchValue}
+                    onChange={this.handleChange}
                 />
-                <Button variant="outline-primary" className="mr-2">
+               <Link to="Search">
+                <Button variant="outline-primary" className="mr-2" onChange={this.handleChange} >
                   Search
                 </Button>
+                </Link>
+
                 <Link to="/login">
                   <Button variant="outline-primary" onClick="">
                     Sing in
@@ -92,18 +117,49 @@ export default class App extends Component {
               </Form>
             </Navbar>
             <Switch>
-            <div  className="container"> 
-              <Route exact path="/" render={() => <HomePage />}></Route>
-              
-              <Route
-                path="/allproducts"
-                render={() => (
-                  <Products
-                    prods={this.state.products}
-                    setProducts={this.funcSetProducts}
-                  />
-                )}
-              ></Route>
+              <div className="container">
+                <Route exact path="/" render={() => <HomePage />}></Route>
+
+                <Route
+                  path="/allproducts"
+                  render={() => (
+                    <Products
+                      prods={this.state.products}
+                      setProducts={this.funcSetProducts}
+                    />
+                  )}
+                ></Route>
+
+                <Route
+                  exact
+                  path="/covers"
+                  render={(props) => (
+                    <Cover {...props} covers={this.state.products} />
+                  )}
+                />
+
+                <Route
+                  exact
+                  path="/powerbanks"
+                  render={(props) => (
+                    <PowerBanks {...props} powerBanks={this.state.products} />
+                  )}
+                />
+                <Route
+                  exact
+                  path="/cables"
+                  render={(props) => (
+                    <Cables {...props} cables={this.state.products} />
+                  )}
+                />
+                {/* ######################## profile ##################### */}
+                <Route exact path="/profile" component={Profile} />
+
+
+                <Route path="/search" render={(props) => <Search {...props} search={this.state.products}/>}></Route>
+
+                <Route path="/login" component={() => <Login />}></Route>
+                {/* <Route path="/Search" component={() => <Search />}></Route> */}
 
               <Route
                 exact
@@ -142,6 +198,7 @@ export default class App extends Component {
                   <AddProd />
                 )}
               />
+
               </div>
             </Switch>
             {/* /////////////MASTER */}

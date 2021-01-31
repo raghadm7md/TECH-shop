@@ -20,7 +20,7 @@ export default class Search extends Component {
 
     const searchProdcut = this.props.searchProduct.map((elem, index) => {
       console.log(this.props.result);
-      if (this.props.searchProduct[index].name == this.props.result) {
+      if (this.props.searchProduct[index].name === this.props.result) {
         return <ProdCard name={elem.name} price={elem.price} />;
       }
     });

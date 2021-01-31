@@ -22,8 +22,8 @@ export default class App extends Component {
 
     this.state = {
       products: [],
-      searchValue: "",
 
+      searchValue: "",
       isLoggedIn:false,
       covers:[],
       powerbanks:[],
@@ -57,9 +57,12 @@ export default class App extends Component {
     this.setState({ cables: newCbl });
   };
 
+  logFunc = () => {
+
+  }
 
   render() {
-    // console.log(this.state.products);
+    console.log(this.state.products);
 
     return (
       <Router>
@@ -101,10 +104,12 @@ export default class App extends Component {
                   placeholder="search"
                   className="mr-sm-2"
                   value={this.state.searchValue}
-                    onChange={this.handleChange}
+                    onChange={(eve)=>{
+                      this.handleChange(eve)
+                    }}
                 />
                <Link to="Search">
-                <Button variant="outline-primary" className="mr-2" onChange={this.handleChange} >
+                <Button variant="outline-primary" className="mr-2">
                   Search
                 </Button>
                 </Link>
@@ -132,7 +137,7 @@ export default class App extends Component {
 
                
 
-                <Route path="/search" render={(props) => <Search {...props} searchProduct={this.state.products}  result ={this.state.searchValue} />}></Route>
+                <Route path="/search" render={(props) => <Search {...props} searchProduct={this.state.products}/>}></Route>
 
                 
                 {/* <Route path="/Search" component={() => <Search />}></Route> */}

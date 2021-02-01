@@ -5,16 +5,16 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { Navbar, Nav, Form, FormControl, Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 // import { getAllProducts, getAllUsers } from "../api";
-import Cover from "./product/cover";
+import Cover from "./product/Cover";
 import PowerBanks from "./product/powerBank";
 import Cables from "./product/cable";
 import Login from "./components/Login";
 import HomePage from "./components/HomePage";
 import Profile from "./components/Profile";
 import Search from "./components/Search";
-
+import Cart from "./product/Cart";
 import AddProd from "./components/AddProd";
-
+import ProdCard from "./product/ProdCard";
 
 export default class App extends Component {
   constructor(props) {
@@ -22,29 +22,27 @@ export default class App extends Component {
 
     this.state = {
       products: [],
-
+      cart: [],
       searchValue: "",
-      isLoggedIn:false,
-      covers:[],
-      powerbanks:[],
-      cables:[]
-
+      isLoggedIn: false,
+      covers: [],
+      powerbanks: [],
+      cables: [],
     };
 
+    this.AddToCart = this.AddToCart.bind(this);
     this.handleChange = this.handleChange.bind(this);
-
   }
 
   funcSetProducts = (newProd) => {
     this.setState({ products: newProd });
   };
 
-
   //search meshal
   handleChange(event) {
     this.setState({ searchValue: event.target.value });
   }
-  
+
   funcSetCvr = (newCvr) => {
     this.setState({ covers: newCvr });
   };
@@ -57,10 +55,12 @@ export default class App extends Component {
     this.setState({ cables: newCbl });
   };
 
-  logFunc = () => {
+  logFunc = () => {};
 
+  AddToCart=(info)=>{
+    this.setState({ cart: [...this.state.cart, info] });
+    console.log("hi from App")
   }
-
   render() {
     console.log(this.state.products);
 
@@ -98,25 +98,33 @@ export default class App extends Component {
               </Nav>
 
               <Form inline>
-              
                 <FormControl
                   type="text"
                   placeholder="search"
                   className="mr-sm-2"
                   value={this.state.searchValue}
-                    onChange={(eve)=>{
-                      this.handleChange(eve)
-                    }}
+                  onChange={(eve) => {
+                    this.handleChange(eve);
+                  }}
                 />
-               <Link to="Search">
-                <Button variant="outline-primary" className="mr-2">
-                  Search
-                </Button>
+                <Link to="Search">
+                  <Button variant="outline-primary" className="mr-2">
+                    Search
+                  </Button>
                 </Link>
 
                 <Link to="/login">
                   <Button variant="outline-primary" onClick="">
                     Sing in
+                  </Button>
+                </Link>
+
+                <Link to="/cart">
+                  <Button variant="outline-primary" onClick="">
+                    <img
+                      src="https://www.flaticon.com//vstatic/svg/833/833314.svg?token=exp=1612176439~hmac=2cfcee3809abe403d5864ff08b494741"
+                      width="20px"
+                    ></img>
                   </Button>
                 </Link>
               </Form>
@@ -135,51 +143,69 @@ export default class App extends Component {
                   )}
                 ></Route>
 
-               
+                <Route
+                  path="/search"
+                  render={(props) => (
+                    <Search {...props} searchProduct={this.state.products} />
+                  )}
+                ></Route>
 
-                <Route path="/search" render={(props) => <Search {...props} searchProduct={this.state.products}/>}></Route>
-
-                
                 {/* <Route path="/Search" component={() => <Search />}></Route> */}
 
-              <Route
-                exact
-                path="/covers"
-                render={(props) => (
-                  <Cover {...props} covers={this.state.covers} setCvr={this.funcSetCvr} />
-                )}
-              />
+                <Route
+                  exact
+                  path="/covers"
+                  render={(props) => (
+                    <Cover
+                      {...props}
+                      covers={this.state.covers}
+                      setCvr={this.funcSetCvr}
+                      AddToCart={this.AddToCart}
+                    />
+                  )}
+                />
 
-              <Route
-                exact
-                path="/powerbanks"
-                render={(props) => (
-                  <PowerBanks {...props} powerBanks={this.state.powerbanks} setPowerbank={this.funcSetPowerBank}/>
-                )}
-              />
-              <Route
-                exact
-                path="/cables"
-                render={(props) => (
-                  <Cables {...props} cables={this.state.cables} setCables={this.funcSetCable} />
-                )}
-              />
-              {/* ######################## profile ##################### */}
-               <Route
-                exact
-                path="/profile"
-                component={Profile}
-              />
-              <Route path="/login" component={() => <Login isLoggedIn={this.state.isLoggedIn} />}></Route>
+                <Route
+                  exact
+                  path="/powerbanks"
+                  render={(props) => (
+                    <PowerBanks
+                      {...props}
+                      powerBanks={this.state.powerbanks}
+                      setPowerbank={this.funcSetPowerBank}
+                    />
+                  )}
+                />
+                <Route
+                  exact
+                  path="/cables"
+                  render={(props) => (
+                    <Cables
+                      {...props}
+                      cables={this.state.cables}
+                      setCables={this.funcSetCable}
+                    />
+                  )}
+                />
+                {/* ######################## profile ##################### */}
+                <Route exact path="/profile" component={Profile} />
+                <Route
+                  path="/login"
+                  component={() => <Login isLoggedIn={this.state.isLoggedIn} />}
+                ></Route>
 
-              <Route
-                exact
-                path="/addprod"
-                render={() => (
-                  <AddProd />
-                )}
-              />
-
+                <Route exact path="/addprod" render={() => <AddProd />} />
+                <Route
+                  exact
+                  path="/cart"
+                  render={() => (
+                    <Cart
+                      // {...props}
+                      // AddProduct={this.state.products}
+                      currentCart={this.state.cart}
+                    />
+                  )}
+                />
               </div>
             </Switch>
             {/* /////////////MASTER */}

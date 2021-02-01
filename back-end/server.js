@@ -6,15 +6,17 @@ const cors = require('cors');
 const bodyParser=require("body-parser");
 const productRouter = require('./routes/products');
 const userRouter = require('./routes/users');
-
 const db_url = require('./db');
+
+// here for add image ##################
+const fileUpload = require('express-fileupload');
 
 /* ============================================== */
 // Establish Database Connection
-mongoose.connect(db_url, { useNewUrlParser: true });
-mongoose.connection.once('open', () => {
-  console.log('Connected to Mongo');
-});
+// mongoose.connect(db_url, { useNewUrlParser: true });
+// mongoose.connection.once('open', () => {
+//   console.log('Connected to Mongo');
+// });
 
 // Instantiate Express Application Object
 const app = express();
@@ -32,6 +34,9 @@ app.use(bodyParser.urlencoded({extended:true}))
 //
 // The method `.use` sets up middleware for the Express application
 app.use(express.json());
+// here for add image ##################
+app.use(fileUpload());
+
 
 const reactPort = 3000;
 // Set CORS headers on response from this API using the `cors` NPM package.

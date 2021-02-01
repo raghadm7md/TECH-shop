@@ -29,8 +29,11 @@ export default class cover extends Component {
       });
   }
 
-  addToCart = (eve) => {
-    console.log("unfinished addtocart");
+  AddToCart = (prodcut) => {
+
+    this.props.AddToCart(prodcut)
+    console.log("hhiiii from cover")
+
   };
 
   render() {
@@ -41,7 +44,8 @@ export default class cover extends Component {
     const coverProdcut = this.props.covers.map((elem, index) => {
       if (elem.type === "cover") {
         return (
-         <ProdCard name={elem.name} price={elem.price} quantity={elem.quantitiy}/>
+         <ProdCard name={elem.name} price={elem.price} quantity={elem.quantitiy}
+         AddToCart={this.AddToCart}/>
         );
       }
     });

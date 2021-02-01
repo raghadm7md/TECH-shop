@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Navbar, Nav, Form, FormControl, Button } from "react-bootstrap";
-import {addProduct} from "../api";
-
+import { addProduct, AddImage } from "../api";
 
 export default class AddProd extends Component {
   constructor(props) {
@@ -12,11 +11,13 @@ export default class AddProd extends Component {
       type: "",
       description: "",
       quantitiy: "",
+      image: "",
     };
   }
 
   AddToStock = (event) => {
     event.preventDefault();
+
     let productInfo = {
       name: this.state.name,
       price: this.state.price,
@@ -24,17 +25,22 @@ export default class AddProd extends Component {
       description: this.state.description,
       quantitiy: this.state.quantitiy,
     };
-    console.log(productInfo)
+    console.log(productInfo);
     addProduct(productInfo)
       .then((response) => {
         console.log("Product: ", response.data);
-
       })
       .catch((error) => {
-        console.log('API ERROR:', error);
+        console.log("API ERROR:", error);
       });
 
+    // let imagefile = this.state.image;
+    // console.log(imagefile);
+    // var formData = new FormData();
+    // formData.append("image", imagefile);
+    // console.log(formData);
   };
+
   render() {
     return (
       <div>
@@ -44,52 +50,68 @@ export default class AddProd extends Component {
             <Form.Label>Product name</Form.Label>
             <Form.Control
               type="text"
-                onChange={(e) => {
-                  console.log("CHANGE: ", e.target.value);
-                  this.setState({ name: e.target.value });
-                }}
+              onChange={(e) => {
+                console.log("CHANGE: ", e.target.value);
+                this.setState({ name: e.target.value });
+              }}
             />
           </Form.Group>
           <Form.Group controlId="formBasicEmail">
             <Form.Label>Price </Form.Label>
             <Form.Control
               type="Number"
-                onChange={(e) => {
-                  console.log("CHANGE: ", e.target.value);
-                  this.setState({ price: e.target.value });
-                }}
+              onChange={(e) => {
+                console.log("CHANGE: ", e.target.value);
+                this.setState({ price: e.target.value });
+              }}
             />
           </Form.Group>
           <Form.Group controlId="formBasicEmail">
             <Form.Label>Type </Form.Label>
-            <select id="inputState" class="form-control" onChange={(e) => {
-                  console.log("CHANGE: ", e.target.value);
-                  this.setState({ type: e.target.value });
-                }}>
+            <select
+              id="inputState"
+              class="form-control"
+              onChange={(e) => {
+                console.log("CHANGE: ", e.target.value);
+                this.setState({ type: e.target.value });
+              }}
+            >
               <option selected>Choose...</option>
               <option value="cover">Covers</option>
               <option value="cable">Cables</option>
-              <option value="PowerBank" >Power Banks</option>
+              <option value="PowerBank">Power Banks</option>
             </select>
           </Form.Group>
           <Form.Group controlId="formBasicEmail">
             <Form.Label>Description</Form.Label>
             <Form.Control
               type="Text"
-                onChange={(e) => {
-                  console.log("CHANGE: ", e.target.value);
-                  this.setState({ description: e.target.value });
-                }}
+              onChange={(e) => {
+                console.log("CHANGE: ", e.target.value);
+                this.setState({ description: e.target.value });
+              }}
             />
           </Form.Group>
           <Form.Group controlId="formBasicEmail">
             <Form.Label>Quantitiy </Form.Label>
             <Form.Control
               type="Number"
-                onChange={(e) => {
-                  console.log("CHANGE: ", e.target.value);
-                  this.setState({ quantitiy: e.target.value });
-                }}
+              onChange={(e) => {
+                console.log("CHANGE: ", e.target.value);
+                this.setState({ quantitiy: e.target.value });
+              }}
+            />
+          </Form.Group>
+          <Form.Group controlId="formBasicEmail">
+            <Form.Label>Upload image for product </Form.Label>
+            <Form.Control
+              type="file"
+              onChange={(e) => {
+                console.log("CHANGE: ", e.target.files);
+                console.log("CHANGE: ", e.target.files[0]);
+                let image = e.target.files[0];
+                this.setState({ image: image });
+              }}
             />
           </Form.Group>
           <Button variant="primary" type="submit" onClick={this.AddToStock}>

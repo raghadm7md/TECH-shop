@@ -35,7 +35,8 @@ export default class powerBank extends Component {
       //   console.log(this.state.cover[index]);
       if (this.props.powerBanks[index].type === "PowerBank") {
         return (
-         <ProdCard name={elem.name} price={elem.price}/>
+         <ProdCard name={elem.name} price={elem.price}
+         />
         );
       }
     });

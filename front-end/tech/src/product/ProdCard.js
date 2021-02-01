@@ -8,14 +8,19 @@ export default class ProdCard extends Component {
       Cart: {
         ProdName: "",
         ProdPrice: "",
+        quantity:"",
+        id:"",
       },
     };
   }
   FoundProduct = (event) => {
     event.preventDefault()
+    let quantity=this.props.quantity-1
     const addedProd = {
-      ProdName: this.props.name,
-      ProdPrice: this.props.price,
+      name: this.props.name,
+      price: this.props.price,
+      quantitiy:quantity ,
+      _id:this.props.id
     };
     this.setState({ Cart: addedProd });
     let cart=this.state.Cart
@@ -38,7 +43,6 @@ export default class ProdCard extends Component {
               src={elem.background_image}
               style={{ width: "100%", height: "250px" }}
             /> */}
-
           <Card.Body>
             <Card.Title>{this.props.name}</Card.Title>
             <Card.Text>

@@ -44,10 +44,10 @@ const addProduct = (info) => {
   return axios.post(`${API_URL}/product`, info);
 };
 
-// // Add image for product ##############
-// const AddImage = (info) => {
-//   return axios.post(`${API_URL}/uploadImage`, info);
-// };
+// decrease quantitiy for product ##############
+const DecQuantitiy = (id,info) => {
+  return axios.put(`${API_URL}/product/${id}`, info);
+};
 
 export {
   getAllProducts,
@@ -58,6 +58,5 @@ export {
   EditUser,
   login,
   addProduct,
-  //################ here
-  // AddImage,
+  DecQuantitiy,
 };

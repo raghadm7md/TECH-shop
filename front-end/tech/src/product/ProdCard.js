@@ -7,16 +7,16 @@ export default class ProdCard extends Component {
     super(props);
     this.state = {
       Cart: {
-        ProdName: this.props.name,
-        ProdPrice: this.props.price,
-        quantity: this.props.quantity,
+        name: this.props.name,
+        price: this.props.price,
+        quantitiy: this.props.quantity,
         id: this.props.id,
       },
     };
   }
   
   FoundProduct = (event) => {
-    //event.preventDefault();
+    event.preventDefault();
     let quantity = this.props.quantity - 1;
     const addedProd = {
       name: this.props.name,
@@ -25,10 +25,10 @@ export default class ProdCard extends Component {
       _id: this.props.id,
     };
     this.setState({ Cart: addedProd });
+    console.log(this.state.Cart);
     let cart = this.state.Cart;
     console.log(cart);
     this.props.AddToCart(cart);
-    console.log(this.state.Cart);
  
   };
 

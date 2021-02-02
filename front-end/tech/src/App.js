@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./App.css";
 import Products from "./components/Products";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link, Redirect } from "react-router-dom";
 import { Navbar, Nav, Form, FormControl, Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 // import { getAllProducts, getAllUsers } from "../api";
@@ -14,7 +14,10 @@ import Profile from "./components/Profile";
 import Search from "./components/Search";
 import Register from "./components/Register"
 import AddProd from "./components/AddProd";
-
+import {LogOut } from "./api";
+import {
+  getFromStorage
+} from './utils/storage';
 
 export default class App extends Component {
   constructor(props) {
@@ -27,12 +30,20 @@ export default class App extends Component {
       isLoggedIn:false,
       covers:[],
       powerbanks:[],
-      cables:[]
-
+      cables:[],
+      redirect:false,
+      testt:"1",
+      isLoading: true,
+      token: '',
+      rtoken: '',
+      name:"",
+      signInEmail:"",
+      signInPassword:"",
     };
-
+    
     this.handleChange = this.handleChange.bind(this);
-
+    this.LogToken = this.LogToken.bind(this)
+    this.onlogout = this.onlogout.bind(this)
   }
 
   funcSetProducts = (newProd) => {
@@ -61,14 +72,86 @@ console.log(this.dynamicSearch())
 
   funcSetCable = (newCbl) => {
     this.setState({ cables: newCbl });
-  };
+  }; 
 
+  LogToken = (token,name,signInEmail,signInPassword,rtoken) => {
+    console.log("in app from login, ",name);
+      this.setState({
+        isLoggedIn:true,
+        token:token,
+        name:name,
+        signInEmail:signInEmail,
+        signInPassword:signInPassword,
+        rtoken:rtoken,
+
+      })
+  }
+
+  logoutFunc = () => {
+    this.setState({
+      isLoggedIn:false,
+    })
+  }
+
+
+
+
+
+
+  
+  onlogout() {
+
+    const obj = getFromStorage('the_main_app');
+    console.log("AAA", obj);
+    // const {
+    //   signInEmail,
+    //   signInPassword,
+    // } = this.state;
+    const signInEmail = this.state.signInEmail
+    const signInPassword = this.state.signInPassword
+    if (obj && obj.token) {
+      const { token } = obj;
+      // Verify token
+      LogOut(signInEmail, signInPassword, token)
+        .then((response) => {
+          if (response.data.success) {
+            this.setState({
+              token: '',
+              isLoggedIn:false,
+              redirect: true,
+            });
+
+            this.renderRedirect();
+
+          } else {
+            this.setState({
+              isLoading: false,
+            });
+          }
+        });
+    } else {
+      this.setState({
+        isLoading: false,
+      });
+    }
+  }
  
+  renderRedirect = () => {
+    console.log("itsssssss", );
+    if (this.state.redirect) {
+      this.setState({redirect:false})
+      return <Redirect to='/login' />
+    }
+  }
+
 
   render() {
 
+    
+
     return (
       <Router>
+        {this.renderRedirect()}
         <div className="">
           <div>
             <Navbar bg="light" variant="light" sticky="top">
@@ -92,16 +175,14 @@ console.log(this.dynamicSearch())
 
                 {/* ######################## profile ##################### */}
 
-                <Nav.Link as={Link} to="/profile">
-                  My Account
-                </Nav.Link>
+                
                 <Nav.Link as={Link} to="/addprod">
                   ADD PROD
                 </Nav.Link>
               </Nav>
+              <Nav>
               <Form inline>
-              
-              <FormControl
+                <FormControl
                 type="text"
                 placeholder="search"
                 className="mr-sm-2"
@@ -110,12 +191,23 @@ console.log(this.dynamicSearch())
                     this.handleChange(eve)
                   }}
               />
-                <Link to="/search">
+               <Link to="/search">
+                <Button variant="outline-primary" className="mr-2">
+                  Search
+                </Button>
+                </Link>
 
-              <Button variant="outline-primary" className="mr-2" >
-                Search
-              </Button>
-</Link>
+                {this.state.isLoggedIn? <div className="myacc"><Nav.Link className="d-inline mr-2" as={Link} to="/profile">
+                  My Account: {this.state.name} 
+                </Nav.Link>
+                <Button variant="secondary" onClick={this.onlogout}>Log Out</Button></div> : <Link to="/login">
+                  <Button variant="outline-primary" onClick="">
+                    Sing in
+                  </Button>
+                </Link>}
+              </Form>
+              </Nav>
+              
 
             </Form>
               <Link to="/login">
@@ -134,6 +226,7 @@ console.log(this.dynamicSearch())
                     <Products
                       prods={this.state.products}
                       setProducts={this.funcSetProducts}
+                      isLoggedIn={this.state.isLoggedIn}
                     />
                   )}
                 ></Route>
@@ -141,10 +234,10 @@ console.log(this.dynamicSearch())
 
                
 
+
                 <Route path="/search">
                <Search results={this.state.searchResult} />
                   {/*  render={(props) => <Search {...props}  searchValue={this.state.searchValue} searchProduct={this.state.products}/>}> */}
-
                    </Route>
 
                 
@@ -185,7 +278,7 @@ console.log(this.dynamicSearch())
                 path="/profile"
                 component={Profile}
               />
-              <Route path="/login" component={() => <Login isLoggedIn={this.state.isLoggedIn} />}></Route>
+              <Route path="/login" component={() => <Login isLoggedIn={this.state.isLoggedIn} LogToken={this.LogToken} logout={this.logoutFunc}/>}></Route>
 
               <Route
                 exact

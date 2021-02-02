@@ -4,7 +4,13 @@ import axios from 'axios';
 //import login from '../api'
 // import axios from 'axios';
 import { login } from "../api";
+import { SingIn, LogOut } from "../api";
 import HomePage from './HomePage'
+import { Redirect } from "react-router-dom";
+import {
+  setInStorage,
+  getFromStorage,
+} from '../utils/storage';
 
 
 export default class Login extends Component {
@@ -14,10 +20,31 @@ export default class Login extends Component {
     this.state = {
       email: "",
       password: "",
-      redirectLogin: false
-    };
-  }
+      redirectLogin: false,
+      redirect: false,
+      status:"NOT SIGNED IN",
+      token:"",
+      rtoken:"",
+      isLoading:"",
+      signInError: '',
+      signInEmail: '',
+      signInPassword: '',
 
+    };
+    this.onTextboxChangeSignInEmail = this.onTextboxChangeSignInEmail.bind(this);
+    this.onTextboxChangeSignInPassword = this.onTextboxChangeSignInPassword.bind(this);
+    this.onSignIn = this.onSignIn.bind(this);
+  }
+  onTextboxChangeSignInEmail(event) {
+  this.setState({
+    signInEmail: event.target.value,
+  });
+}
+onTextboxChangeSignInPassword(event) {
+  this.setState({
+    signInPassword: event.target.value,
+  });
+}
 
   // submitLogin = () => {
   //   console.log("INSIDE THE SUBMITLOGIN");
@@ -25,52 +52,86 @@ export default class Login extends Component {
   // }
 
 
-  loginFunc=(e)=>{
-    e.preventDefault();
-    console.log("EENTEREREREREAED");
-    let reqq={
-      email:this.state.email , 
-      password:this.state.password 
+  onSignIn() {
+    // Grab state
+    const {
+      signInEmail,
+      signInPassword,
+    } = this.state;
+    this.setState({
+      isLoading: true,
+    });
+
+
+    // Post request to backend
+    SingIn(signInEmail, signInPassword)
+      .then((response) => {
+    console.log("ENTERED THE FUNC");
+
+        console.log('json', response);
+        if (response.data.success) {
+          setInStorage('the_main_app', { token: response.data.token });
+          console.log("YEEEEEEEES");
+          this.setState({
+            signInError: response.message,
+            isLoading: false,
+            signInPassword: '',
+            signInEmail: '',
+            token: response.data.token,
+            rtoken: response.data.rtoken,
+            status:"SIGNED IN",
+            redirect:true,
+          });
+          
+          this.renderRedirect();
+          this.props.LogToken(response.data.token,response.data.name,signInEmail,signInPassword,response.data.rtoken)
+
+        } else {
+          console.log("NO");
+          this.setState({
+            signInError: response.message,
+            status:"NOT SIGNED IN",
+            isLoading: false,
+          });
+        }
+      })
+      .catch(err=> {
+        console.log(err)
+      });
+  }
+
+
+
+  renderRedirect = () => {
+    if (this.state.redirect) {
+      this.setState({redirect:false})
+      return <Redirect to='/allproducts' />
     }
-    console.log("pppppp ",reqq);
-
-
-    login(reqq)
-    .then((response)=>{
-      alert(response.data.message);
-      if(response.data.success){
-
-        this.setState({redirectLogin:true})
-
-      }else{
-        
-      }
-    })
-    .catch(err=> {
-      console.log(err)
-    })
-
   }
 
-  funcccc = () =>{
-    console.log("aaaaaaaaaa");
-  }
+
 
   render() {
-    if(this.state.redirectLogin) {
-        return <HomePage to={'/allproducts'}/>
+
+    if (this.state.redirect) {
+      return <Redirect to="/allproducts" />
     }
     return (
-      <div>
-        <Form >
+      <div >
+        {this.renderRedirect()}
+        <h1 className="display-4 App">Sign in</h1>
+        <br/>
+<div className="App center"> 
+        <div className="w-50"> 
+        <Form  >
           <Form.Group controlId="formBasicEmail">
             <Form.Label>Email address</Form.Label>
-            <Form.Control
+            <Form.Control style={{width: "100%"}}
               type="email"
               placeholder="Enter email"
               onChange={(e) => {
                 console.log("CHANGE: ", e.target.value);
-                this.setState({ email: e.target.value });
+                this.setState({ signInEmail: e.target.value });
               }}
             />
           </Form.Group>
@@ -82,14 +143,20 @@ export default class Login extends Component {
               placeholder="Password"
               onChange={(e) => {
                 console.log("CHANGE: ", e.target.value);
-                this.setState({ password: e.target.value });
+                this.setState({ signInPassword: e.target.value });
               }}
             />
           </Form.Group>
         </Form>
-        <Button onClick={(e)=>{this.loginFunc(e)}}>Submit</Button>
+        </div> </div>
+        <div className="App"> 
+        <Button onClick={this.onSignIn}>Sign In</Button>
+        
+        </div>
+        <br/>
+        <br/>
 
-        <h4>You dont have account ? <a href='./Register'> register now </a></h4>
+        <h4 className="App">You dont have account? <a href='./Register'> register now </a></h4>
 
       </div>
     );

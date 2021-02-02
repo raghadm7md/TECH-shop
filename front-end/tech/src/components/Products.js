@@ -5,6 +5,14 @@ import Cover from "../product/cover";
 import Cable from "../product/cable";
 
 export default class Products extends Component {
+  constructor(props) {
+    super(props)
+  
+    this.state = {
+      testt:"2",
+    }
+  }
+  
 
   
   componentDidMount() {
@@ -23,6 +31,12 @@ export default class Products extends Component {
 
 
   render() {
+    
+
+    if(this.props.isLoggedIn){
+      return <h1> WELCOMMMMEEEE</h1>
+    }
+
     const allProducts = this.props.prods.map((elem, index) => {
       return <Product name={elem.name} price={elem.price} key={index} />;
     });
@@ -34,9 +48,10 @@ export default class Products extends Component {
     // const cableProdcut = this.props.prods.map((elem, index) => {
     //   return <Cable name={elem.name} price={elem.price} type={elem.type} />;
     // });
-
+    
     return (
       <div>
+        
         <h1>ALL PRODS:</h1>
         {allProducts.length ? allProducts : <h4>No Products!</h4>}
 

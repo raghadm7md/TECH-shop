@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 
 const orderSchema = new mongoose.Schema({
   total: {type: Number},
@@ -19,6 +20,10 @@ const userSchema = new mongoose.Schema({
     city: String,
     houseNumber:Number,
   },
+  isDeleted: {
+    type: Boolean,
+    default: false
+  },
   // embed order in user
   purchased: [orderSchema],
   
@@ -27,8 +32,21 @@ const userSchema = new mongoose.Schema({
   timestamps: true,
 });
 
+
+userSchema.methods.generateHash = function(password) {
+  return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
+};
+userSchema.methods.validPassword = function(password) {
+  if (password == this.password){
+    return true
+  }
+  // return bcrypt.compareSync(password, this.password);
+};
+
 const User = mongoose.model('User', userSchema);
 const Order = mongoose.model('Order', orderSchema);
+
+
 
 module.exports = {
   // User,

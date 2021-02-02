@@ -2,8 +2,8 @@ const express = require('express');
 const mongoose = require("mongoose");
 // Instantiate a Router (mini app that only handles routes)
 const router = express.Router();
-
-const {User , Order} =require('../models/user')
+const UserSession = require('../models/UserSession');
+const {User , Order,} =require('../models/user')
 /* ============================================== */
 // to can see the body from req instead of undefined
 router.use(express.json());
@@ -60,25 +60,25 @@ router.post('/register',(req,res)=>{
 
 
 
-//login 
-router.post('/login',(req,res)=>{
-  let email=req.body.email;
-  let password= req.body.password;
-  User.findOne({email:email, password:password},(err,User1)=>{
-    console.log("ttttttt",User1);
-    if(err){
-      console.log(err);
-      return res.status(500).send({message : "IIIIIIII"});
-    }
-    if(!User1){
-      console.log("OOOOOO");
-      return res.status(401).send({message : "ERRRRR"});
-    }else {
-      console.log("RRRRRRR");
-      return res.status(200).send({message : "OK, SUCCESS", success:true});
-    }
-  })
-})
+// //login 
+// router.post('/login',(req,res)=>{
+//   let email=req.body.email;
+//   let password= req.body.password;
+//   User.findOne({email:email, password:password},(err,User1)=>{
+//     console.log("ttttttt",User1);
+//     if(err){
+//       console.log(err);
+//       return res.status(500).send({message : "IIIIIIII"});
+//     }
+//     if(!User1){
+//       console.log("OOOOOO");
+//       return res.status(401).send({message : "ERRRRR"});
+//     }else {
+//       console.log("RRRRRRR");
+//       return res.status(200).send({message : "OK, SUCCESS", success:true});
+//     }
+//   })
+// })
 
 
 
@@ -185,5 +185,122 @@ router.delete('/user/:id', (req, res) => {
 //     });
 //   });
 // });
+
+
+
+
+router.post('/login', (req, res, next) => {
+  const { body } = req;
+  const {
+    password
+  } = body;
+  let {
+    email
+  } = body;
+
+
+  if (!email) {
+    return res.send({
+      success: false,
+      message: 'Error: Email cannot be blank.'
+    });
+  }
+  if (!password) {
+    return res.send({
+      success: false,
+      message: 'Error: Password cannot be blank.'
+    });
+  }
+
+  email = email.toLowerCase();
+  email = email.trim();
+  
+  User.find({
+    email: email
+  }, (err, users) => {
+    if (err) {
+      console.log('err 2:', err);
+      return res.send({
+        success: false,
+        message: 'Error: server error'
+      });
+    }
+    if (users.length != 1) {
+      return res.send({
+        success: false,
+        message: 'Error: Invalid1'
+      });
+    }
+
+    const user = users[0];
+    if (!user.validPassword(password)) {
+      return res.send({
+        success: false,
+        message: 'Error: Invalid2'
+      });
+    }
+
+    // Otherwise correct user
+    const userSession = new UserSession();
+    userSession.userId = user._id;
+    userSession.name = user.name;
+
+    console.log("mmmm",user._id);
+    userSession.save((err, doc) => {
+      if (err) {
+        console.log(err);
+        return res.send({
+          success: false,
+          message: 'Error: server error'
+        });
+      }
+
+      return res.send({
+        success: true,
+        name:doc.name,
+        message: 'Valid sign in',
+        token:doc._id,
+        rtoken:user._id
+        
+      });
+    });
+  });
+
+
+
+
+});
+
+router.get('/logout', (req, res, next) => {
+  // Get the token
+  const { query } = req;
+  const { token } = query;
+  // ?token=test
+
+  // Verify the token is one of a kind and it's not deleted.
+
+  UserSession.findOneAndUpdate({
+    _id: token,
+    isDeleted: false
+  }, {
+    $set: {
+      isDeleted:true
+    }
+  }, null, (err, sessions) => {
+    if (err) {
+      console.log(err);
+      return res.send({
+        success: false,
+        message: 'Error: Server error'
+      });
+    }
+
+    return res.send({
+      success: true,
+      message: 'Good'
+    });
+  });
+});
+
 
 module.exports=router; 

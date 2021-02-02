@@ -53,5 +53,23 @@ const addProduct = (info) => {
 
 
 
-export { deleteProductByID , getAllProducts, getAllUsers ,getAllCovers,getAllPowerBanks,getAllCables,registeration, EditUser,login, addProduct};
+const SingIn = (signInEmail, signInPassword) => {
+  console.log("AAAAAAAA",signInEmail);
+  return axios.post(`${API_URL}/login`, {
+    email: signInEmail,
+    password: signInPassword
+  });
+}
+
+
+const LogOut = (signInEmail, signInPassword, token) => {
+  return axios.get(`${API_URL}/logout?token=` + token, {
+      email: signInEmail,
+      password: signInPassword,
+  });
+}
+
+
+
+export { getAllProducts, getAllUsers ,getAllCovers,getAllPowerBanks,getAllCables,registeration, EditUser,login, addProduct,SingIn, LogOut, deleteProductByID , };
 

@@ -25,6 +25,9 @@ const getAllUsers = (id) => {
   return axios.get(`${API_URL}/user`);
 }
 
+const deleteProductByID = (id) => {
+  return axios.delete(`${API_URL}/product/${id}`);
+}
 
 //////////////////NAJD
 
@@ -50,5 +53,5 @@ const addProduct = (info) => {
 
 
 
-export { getAllProducts, getAllUsers ,getAllCovers,getAllPowerBanks,getAllCables,registeration, EditUser,login, addProduct};
+export { deleteProductByID , getAllProducts, getAllUsers ,getAllCovers,getAllPowerBanks,getAllCables,registeration, EditUser,login, addProduct};
 

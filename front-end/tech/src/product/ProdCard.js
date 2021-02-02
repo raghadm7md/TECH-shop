@@ -8,8 +8,12 @@ export default class ProdCard extends Component {
     this.state = {};
   }
 
-  render() {
+  deleteProoduct = (event) => {
+    event.preventDefault();
+    this.props.deleteProoduct(this.props.id);
+  };
 
+  render() {
     return (
       <div className="mr-3 mt-2 text-center">
         <Card
@@ -27,10 +31,8 @@ export default class ProdCard extends Component {
           <Card.Body>
             <Card.Title>{this.props.name}</Card.Title>
             <Card.Text>
-                
-                <div className="price d-inline">{this.props.price}</div> <div className="d-inline">SR</div>
-                
-
+              <div className="price d-inline">{this.props.price}</div>{" "}
+              <div className="d-inline">SR</div>
               <div>
                 <div>
                   <br />
@@ -40,7 +42,6 @@ export default class ProdCard extends Component {
           </Card.Body>
           <Card.Footer>
             {/* <small className="text-muted">?????????</small> */}
-
             {this.props.quantity === 0 ? (
               <Button variant="secondary" disabled>
                 Out of Stock
@@ -54,7 +55,14 @@ export default class ProdCard extends Component {
               >
                 Add to Cart
               </Button>
-            )}
+            )}{" "}
+            <Button
+              variant="secondary"
+              variant="outline-primary"
+              onClick={this.deleteProoduct}
+            >
+              remove from Cart
+            </Button>
           </Card.Footer>
         </Card>
         <br />

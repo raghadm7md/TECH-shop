@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { getAllProducts, getAllUsers } from "../api";
 import { Button, CardGroup, Card, Collapse } from "react-bootstrap";
 import { getAllCovers, DecQuantitiy } from "../api";
 import ProdCard from "./ProdCard";
@@ -27,7 +26,7 @@ export default class cover extends Component {
         console.log("API ERROR:", error);
       });
   }
-
+ /* ######################## Cart ##################### */
   AddToCart = (prodcut) => {
     this.setState({ cart: [...this.state.cart, prodcut] });
       if (this.state.cart.includes( prodcut._id, 0)) {

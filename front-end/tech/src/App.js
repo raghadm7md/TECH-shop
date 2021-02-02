@@ -195,13 +195,13 @@ export default class App extends Component {
                 ></Route>
 
                 <Route exact path="/addprod" render={() => <AddProd />} />
+             {/* ######################## Cart ##################### */}
                 <Route
                   exact
                   path="/cart"
                   render={() => (
                     <Cart
                       // {...props}
-                      // AddProduct={this.state.products}
                       currentCart={this.state.cart}
                     />
                   )}

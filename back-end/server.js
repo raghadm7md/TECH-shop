@@ -13,10 +13,10 @@ const db_url = require('./db');
 
 /* ============================================== */
 // Establish Database Connection
-mongoose.connect(db_url, { useNewUrlParser: true });
-mongoose.connection.once('open', () => {
-  console.log('Connected to Mongo');
-});
+// mongoose.connect(db_url, { useNewUrlParser: true });
+// mongoose.connection.once('open', () => {
+//   console.log('Connected to Mongo');
+// });
 
 // Instantiate Express Application Object
 const app = express();

@@ -32,8 +32,11 @@ export default class cover extends Component {
     if (this.state.cart.includes(prodcut._id, 0)) {
       alert("You Already added to cart!!");
     } else {
+
       this.props.AddToCart(prodcut);
       console.log(prodcut.quantitiy);
+      console.log(prodcut.name)
+      console.log(prodcut.price)
       console.log("hi from cover");
 
       DecQuantitiy(prodcut._id, prodcut)

@@ -312,9 +312,9 @@ export default class App extends Component {
                 <Route
                   exact
                   path="/cart"
-                  render={() => (
+                  render={(props) => (
                     <Cart
-                      // {...props}
+                      {...props}
                       currentCart={this.state.cart}
                     />
                   )}

@@ -18,7 +18,7 @@ export default class Products extends Component {
       .catch((error) => {
         console.log("API ERROR:", error);
       });
-  }
+   }
 
 
 

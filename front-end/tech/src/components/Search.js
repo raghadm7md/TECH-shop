@@ -6,11 +6,13 @@ import { CardGroup } from "react-bootstrap";
 
 export default class Search extends Component {
   constructor(props) {
-    super(props);
-    this.state = {
-      SearchArr: [],
+    super(props)
+    this.state = {	
+      SearchArr: [],	
     };
   }
+
+  
 
   render() {
     console.log(this.props.searchValue);
@@ -25,17 +27,13 @@ export default class Search extends Component {
       }
     });
 
-
-    //   if (this.props.searchProduct[index].name === this.props.searchValue) {
-        
-    //     return <ProdCard name={elem.name} price={elem.price} />;
-    //   }
-    // });
-
     return (
       <div>
-        <h1 class="display-4">search prodcut </h1>
-        <CardGroup> {searchProdcut} </CardGroup>
+       <h1 class="display-4">search prodcut </h1>
+{this.props.results.length > 0 ? this.props.results.map((e) => <h5>{e}</h5>) : "Empty"}
+        {/*         <h1 class="display-4">search prodcut </h1>
+<CardGroup> {dynamicSearch} </CardGroup> */}
+
       </div>
     );
   }

@@ -23,6 +23,7 @@ export default class App extends Component {
     this.state = {
       products: [],
       searchValue: "",
+      searchResult: [],
       isLoggedIn:false,
       covers:[],
       powerbanks:[],
@@ -37,10 +38,17 @@ export default class App extends Component {
   funcSetProducts = (newProd) => {
     this.setState({ products: newProd });
   };
+  dynamicSearch = (searchValue=this.state.searchValue) => {
+    return this.state.products.filter(name => name.toLowerCase().includes(searchValue.toLowerCase()))
+  }
 
-  //search meshal
+  
   handleChange(event) {
-    this.setState({ searchValue: event.target.value });
+console.log(this.dynamicSearch())
+    let result = this.dynamicSearch()
+    this.setState({ searchValue: event.target.value, searchResult: result
+     });
+    console.log(this.state.searchValue)
   }
   
   funcSetCvr = (newCvr) => {
@@ -55,9 +63,7 @@ export default class App extends Component {
     this.setState({ cables: newCbl });
   };
 
-  logFunc = () => {
-
-  }
+ 
 
   render() {
 
@@ -93,29 +99,30 @@ export default class App extends Component {
                   ADD PROD
                 </Nav.Link>
               </Nav>
-
               <Form inline>
               
-                <FormControl
-                  type="text"
-                  placeholder="search"
-                  className="mr-sm-2"
-                  value={this.state.searchValue}
-                  onChange={this.handleChange}
-                    
-                />
-               <Link to="Search">
-                <Button variant="outline-primary" className="mr-2">
-                  Search
-                </Button>
-                </Link>
+              <FormControl
+                type="text"
+                placeholder="search"
+                className="mr-sm-2"
+                value={this.searchValue}
+                  onChange={(eve)=>{
+                    this.handleChange(eve)
+                  }}
+              />
+                <Link to="/search">
 
-                <Link to="/login">
+              <Button variant="outline-primary" className="mr-2" >
+                Search
+              </Button>
+</Link>
+
+            </Form>
+              <Link to="/login">
                   <Button variant="outline-primary" onClick="">
                     Sing in
                   </Button>
                 </Link>
-              </Form>
             </Navbar>
             <Switch>
               <div className="container">
@@ -134,7 +141,11 @@ export default class App extends Component {
 
                
 
-                <Route path="/search" render={(props) => <Search {...props} searchProduct={this.state.products} searchValue={this.state.searchValue}/>}></Route>
+                <Route path="/search">
+               <Search results={this.state.searchResult} />
+                  {/*  render={(props) => <Search {...props}  searchValue={this.state.searchValue} searchProduct={this.state.products}/>}> */}
+
+                   </Route>
 
                 
                 {/* <Route path="/Search" component={() => <Search />}></Route> */}

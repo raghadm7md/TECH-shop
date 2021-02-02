@@ -25,6 +25,7 @@ router.get("/product", (req, res) => {
   console.log("GET /product");
   Product.find({}, function (err, data) {
     res.json(data);
+    
   });
 });
 

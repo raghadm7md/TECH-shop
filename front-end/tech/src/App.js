@@ -1,23 +1,27 @@
 import React, { Component } from "react";
 import "./App.css";
 import Products from "./components/Products";
-import { BrowserRouter as Router, Switch, Route, Link, Redirect } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  Redirect,
+} from "react-router-dom";
 import { Navbar, Nav, Form, FormControl, Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 // import { getAllProducts, getAllUsers } from "../api";
-import Cover from "./product/Cover";
+import Cover from "./product/cover";
 import PowerBanks from "./product/powerBank";
 import Cables from "./product/cable";
 import Login from "./components/Login";
 import HomePage from "./components/HomePage";
 import Profile from "./components/Profile";
 import Search from "./components/Search";
-import Register from "./components/Register"
+import Register from "./components/Register";
 import AddProd from "./components/AddProd";
-import {LogOut } from "./api";
-import {
-  getFromStorage
-} from './utils/storage';
+import { LogOut } from "./api";
+import { getFromStorage } from "./utils/storage";
 import Cart from "./product/Cart";
 import ProdCard from "./product/ProdCard";
 
@@ -29,41 +33,41 @@ export default class App extends Component {
       products: [],
       searchValue: "",
       searchResult: [],
-      isLoggedIn:false,
-      covers:[],
-      powerbanks:[],
-      cables:[],
-      redirect:false,
-      testt:"1",
+      isLoggedIn: false,
+      covers: [],
+      powerbanks: [],
+      cables: [],
+      redirect: false,
+      testt: "1",
       isLoading: true,
-      token: '',
-      rtoken: '',
-      name:"",
-      signInEmail:"",
-      signInPassword:"",
+      token: "",
+      rtoken: "",
+      name: "",
+      signInEmail: "",
+      signInPassword: "",
       cart: [],
-
     };
     this.AddToCart = this.AddToCart.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.LogToken = this.LogToken.bind(this)
-    this.onlogout = this.onlogout.bind(this)
+    this.LogToken = this.LogToken.bind(this);
+    this.onlogout = this.onlogout.bind(this);
+    this.dynamicSearch = this.dynamicSearch.bind(this);
   }
 
   funcSetProducts = (newProd) => {
     this.setState({ products: newProd });
   };
-  dynamicSearch = (searchValue=this.state.searchValue) => {
-    return this.state.products.filter(name => name.toLowerCase().includes(searchValue.toLowerCase()))
-  }
+  dynamicSearch = (searchValue = this.state.searchValue) => {
+    return this.state.products.filter((name) =>
+      name.includes(searchValue)
+    );
+  };
 
-  
   handleChange(event) {
-console.log(this.dynamicSearch())
-    let result = this.dynamicSearch()
-    this.setState({ searchValue: event.target.value, searchResult: result
-     });
-    console.log(this.state.searchValue)
+    console.log(this.dynamicSearch());
+    let result = this.dynamicSearch();
+    this.setState({ searchValue: event.target.value, searchResult: result });
+    console.log(this.state.searchValue);
   }
 
   funcSetCvr = (newCvr) => {
@@ -76,88 +80,73 @@ console.log(this.dynamicSearch())
 
   funcSetCable = (newCbl) => {
     this.setState({ cables: newCbl });
-  }; 
+  };
 
-  LogToken = (token,name,signInEmail,signInPassword,rtoken) => {
-    console.log("in app from login, ",name);
-      this.setState({
-        isLoggedIn:true,
-        token:token,
-        name:name,
-        signInEmail:signInEmail,
-        signInPassword:signInPassword,
-        rtoken:rtoken,
-
-      })
-  }
+  LogToken = (token, name, signInEmail, signInPassword, rtoken) => {
+    console.log("in app from login, ", name);
+    this.setState({
+      isLoggedIn: true,
+      token: token,
+      name: name,
+      signInEmail: signInEmail,
+      signInPassword: signInPassword,
+      rtoken: rtoken,
+    });
+  };
 
   logoutFunc = () => {
     this.setState({
-      isLoggedIn:false,
-    })
-  }
+      isLoggedIn: false,
+    });
+  };
 
-
-
-
-
-
-  
   onlogout() {
-
-    const obj = getFromStorage('the_main_app');
+    const obj = getFromStorage("the_main_app");
     console.log("AAA", obj);
     // const {
     //   signInEmail,
     //   signInPassword,
     // } = this.state;
-    const signInEmail = this.state.signInEmail
-    const signInPassword = this.state.signInPassword
+    const signInEmail = this.state.signInEmail;
+    const signInPassword = this.state.signInPassword;
     if (obj && obj.token) {
       const { token } = obj;
       // Verify token
-      LogOut(signInEmail, signInPassword, token)
-        .then((response) => {
-          if (response.data.success) {
-            this.setState({
-              token: '',
-              isLoggedIn:false,
-              redirect: true,
-            });
+      LogOut(signInEmail, signInPassword, token).then((response) => {
+        if (response.data.success) {
+          this.setState({
+            token: "",
+            isLoggedIn: false,
+            redirect: true,
+          });
 
-            this.renderRedirect();
-
-          } else {
-            this.setState({
-              isLoading: false,
-            });
-          }
-        });
+          this.renderRedirect();
+        } else {
+          this.setState({
+            isLoading: false,
+          });
+        }
+      });
     } else {
       this.setState({
         isLoading: false,
       });
     }
   }
- 
+
   renderRedirect = () => {
-    console.log("itsssssss", );
+    console.log("itsssssss");
     if (this.state.redirect) {
-      this.setState({redirect:false})
-      return <Redirect to='/login' />
+      this.setState({ redirect: false });
+      return <Redirect to="/login" />;
     }
-  }
+  };
 
-
-
-  AddToCart=(info)=>{
+  AddToCart = (info) => {
     this.setState({ cart: [...this.state.cart, info] });
-    console.log("hi from App")
-  }
+    console.log("hi from App");
+  };
   render() {
-
-    
-
     return (
       <Router>
         {this.renderRedirect()}
@@ -184,54 +173,59 @@ console.log(this.dynamicSearch())
 
                 {/* ######################## profile ##################### */}
 
-                
                 <Nav.Link as={Link} to="/addprod">
                   ADD PROD
                 </Nav.Link>
               </Nav>
               <Nav>
-              <Form inline>
-                <FormControl
-                type="text"
-                placeholder="search"
-                className="mr-sm-2"
-                value={this.searchValue}
-                  onChange={(eve)=>{
-                    this.handleChange(eve)
-                  }}
-              />
-               <Link to="/search">
-                <Button variant="outline-primary" className="mr-2">
-                  Search
-                </Button>
-                </Link>
+                <Form inline>
+                  <FormControl
+                    type="text"
+                    placeholder="search"
+                    className="mr-sm-2"
+                    value={this.searchValue}
+                    onChange={(eve) => {
+                      this.handleChange(eve);
+                    }}
+                  />
+                  <Link to="/search">
+                    <Button variant="outline-primary" className="mr-2">
+                      Search
+                    </Button>
+                  </Link>
 
-                {this.state.isLoggedIn ? <div className="myacc"><Nav.Link className="d-inline mr-2" as={Link} to="/profile">
-                  My Account: {this.state.name} 
-                </Nav.Link>
-                <Button variant="secondary" onClick={this.onlogout}>Log Out</Button></div> : <Link to="/login">
-                  <Button variant="outline-primary" onClick="">
-                    Sing in
-                  </Button>
-                </Link>}
+                  {this.state.isLoggedIn ? (
+                    <div className="myacc">
+                      <Nav.Link
+                        className="d-inline mr-2"
+                        as={Link}
+                        to="/profile"
+                      >
+                        My Account: {this.state.name}
+                      </Nav.Link>
+                      <Button variant="secondary" onClick={this.onlogout}>
+                        Log Out
+                      </Button>
+                    </div>
+                  ) : (
+                    <Link to="/login">
+                      <Button variant="outline-primary" onClick="">
+                        Sing in
+                      </Button>
+                    </Link>
+                  )}
 
-                <Link to="/cart">
-                  <Button variant="outline-primary" onClick="">
-                    <img
-                      src="https://www.flaticon.com//vstatic/svg/833/833314.svg?token=exp=1612176439~hmac=2cfcee3809abe403d5864ff08b494741"
-                      width="20px"
-                    ></img>
-                  </Button>
-                </Link>
-              </Form>
+                  <Link to="/cart">
+                    <Button variant="outline-primary" onClick="">
+                      <img
+                        src="https://www.flaticon.com//vstatic/svg/833/833314.svg?token=exp=1612176439~hmac=2cfcee3809abe403d5864ff08b494741"
+                        width="20px"
+                      ></img>
+                    </Button>
+                  </Link>
+                </Form>
               </Nav>
-              
 
-              <Link to="/login">
-                  <Button variant="outline-primary" onClick="">
-                    Sing in
-                  </Button>
-                </Link>
             </Navbar>
             <Switch>
               <div className="container">
@@ -247,76 +241,74 @@ console.log(this.dynamicSearch())
                     />
                   )}
                 ></Route>
-                
-
-               
-
 
                 <Route path="/search">
-               <Search results={this.state.searchResult} />
+                  <Search results={this.state.searchResult} />
                   {/*  render={(props) => <Search {...props}  searchValue={this.state.searchValue} searchProduct={this.state.products}/>}> */}
-                   </Route>
+                </Route>
 
                 {/* <Route path="/Search" component={() => <Search />}></Route> */}
 
-              <Route
-                exact
-                path="/covers"
-                render={(props) => (
-                  <Cover {...props} covers={this.state.covers} setCvr={this.funcSetCvr} AddToCart={this.AddToCart}/>
-                )}
-              />
+                <Route
+                  exact
+                  path="/covers"
+                  render={(props) => (
+                    <Cover
+                      {...props}
+                      covers={this.state.covers}
+                      setCvr={this.funcSetCvr}
+                      AddToCart={this.AddToCart}
+                    />
+                  )}
+                />
 
-              <Route
-                exact
-                path="/powerbanks"
-                render={(props) => (
-                  <PowerBanks {...props} powerBanks={this.state.powerbanks} setPowerbank={this.funcSetPowerBank}/>
-                )}
-              />
-              
-              <Route
-                exact
-                path="/cables"
-                render={(props) => (
-                  <Cables {...props} cables={this.state.cables} setCables={this.funcSetCable} />
-                )}
-              />
+                <Route
+                  exact
+                  path="/powerbanks"
+                  render={(props) => (
+                    <PowerBanks
+                      {...props}
+                      powerBanks={this.state.powerbanks}
+                      setPowerbank={this.funcSetPowerBank}
+                    />
+                  )}
+                />
 
-              
+                <Route
+                  exact
+                  path="/cables"
+                  render={(props) => (
+                    <Cables
+                      {...props}
+                      cables={this.state.cables}
+                      setCables={this.funcSetCable}
+                    />
+                  )}
+                />
 
-
-
-              {/* ######################## profile ##################### */}
-               <Route
-                exact
-                path="/profile"
-                component={Profile}
-              />
-              <Route path="/login" component={() => <Login isLoggedIn={this.state.isLoggedIn} LogToken={this.LogToken} logout={this.logoutFunc}/>}></Route>
-
-              <Route
-                exact
-                path="/addprod"
-                render={() => (
-                  <AddProd />
-                )}
-              />
-
-
-              <Route
-                exact
-                path="/Register"
-                render={(props) => (
-                  <Register {...props}/>
-                )}
-              />
-
-
-              
+                {/* ######################## profile ##################### */}
+                <Route exact path="/profile" component={Profile} />
+                <Route
+                  path="/login"
+                  component={() => (
+                    <Login
+                      isLoggedIn={this.state.isLoggedIn}
+                      LogToken={this.LogToken}
+                      logout={this.logoutFunc}
+                    />
+                  )}
+                ></Route>
 
                 <Route exact path="/addprod" render={() => <AddProd />} />
-             {/* ######################## Cart ##################### */}
+
+                <Route
+                  exact
+                  path="/Register"
+                  render={(props) => <Register {...props} />}
+                />
+
+                <Route exact path="/addprod" render={() => <AddProd />} />
+                {/* ######################## Cart ##################### */}
                 <Route
                   exact
                   path="/cart"

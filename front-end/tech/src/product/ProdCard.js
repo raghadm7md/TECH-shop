@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Button, CardGroup, Card, Collapse } from "react-bootstrap";
 
+
 export default class ProdCard extends Component {
   constructor(props) {
     super(props);
@@ -13,6 +14,7 @@ export default class ProdCard extends Component {
       },
     };
   }
+  
   FoundProduct = (event) => {
     event.preventDefault();
     let quantity = this.props.quantity - 1;
@@ -28,11 +30,15 @@ export default class ProdCard extends Component {
     this.props.AddToCart(cart);
     console.log(this.state.Cart);
 
-    deleteProoduct = (event) => {
-      event.preventDefault();
-      this.props.deleteProoduct(this.props.id);
-    };
+    
   };
+
+  deleteProoduct = (event) => {
+    event.preventDefault();
+    this.props.deleteProoduct(this.props.id);
+  };
+
+
   render() {
     return (
       <div className="mr-3 mt-2 text-center">

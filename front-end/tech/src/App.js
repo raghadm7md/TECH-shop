@@ -23,7 +23,7 @@ import AddProd from "./components/AddProd";
 import { LogOut } from "./api";
 import { getFromStorage } from "./utils/storage";
 import Cart from "./product/Cart";
-import ProdCard from "./product/ProdCard";
+import CartElements from "./product/CartElements";
 
 export default class App extends Component {
   constructor(props) {

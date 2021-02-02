@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { Button, CardGroup, Card, Collapse } from "react-bootstrap";
+import CartElements from "./CartElements"
+import { DecQuantitiy } from "../api";
 
 export default class Cart extends Component {
   constructor(props) {
@@ -7,51 +9,57 @@ export default class Cart extends Component {
 
     this.state = {
       count: 1,
+      id:""
     };
   }
+
+  
 // create new component and move the code from here to the new one, then call the new component here
+
 
   // add function for buy button (add to order and edit the quantity in DB )
   // add function that sum the prices and give the total
+  getCount=(count,id)=>{
+    this.setState({count:count})
+    this.setState({id:id})
+
+    console.log(this.state.count)
+
+  }
+  
+  BuyProductd=()=>{
+    let newQ={
+        quantitiy: this.state.count,
+    }
+    console.log(newQ.quantitiy)
+    DecQuantitiy(this.state.id, newQ)
+        .then((response) => {
+          console.log("DecQuantitiy: ", response.data);
+        })
+        .catch((error) => {
+          console.log("API ERROR:", error);
+        });
+}
 
   render() {
-    console.log(this.props.currentCart);
+    console.log(this.props.currentCart)
     const CartElemrnt = this.props.currentCart.map((element, index) => {
-
-     const IncQuatity = () => {
-        let num = this.state.count;
-        num++;
-        this.setState({ count: num });
-        console.log(num);
-      };
-      const decQuatity = () => {
-        let num=this.state.count
-        if (num>1){
-          num--;
-          this.setState({ count: num });
-          console.log(num);
-        }
-      };
-      return (
-        <div className="row">
-          <div class="col-xs-6 col-md-4">
-            <h3>{element.name}</h3>
-          </div>
-          <div class="col-xs-6 col-md-4">
-            <h3>{element.price}</h3>
-          </div>
-          <div class="col-xs-6 col-md-4">
-            <Button onClick={IncQuatity}>+</Button>
-            <h3>{this.state.count}</h3>
-            <Button onClick={decQuatity}>-</Button>
-          </div>
-        </div>
-      );
-    });
+      console.log(element.name)
+      return(
+        <CartElements
+        id={element.id}
+        name={element.name}
+        price={element.price}
+        quantity={element.quantitiy}
+        getCount={this.getCount}
+        gitId={this.BuyProductd}
+        />
+      )
+    })
     return (
       <div>
-        {CartElemrnt}
-        <Button>Buy</Button>
+      {CartElemrnt}
+      <Button onClick={this.BuyProductd}>Buy</Button>
       </div>
     );
   }

@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-import { getAllProducts, getAllUsers } from "../api";
 import { Button, CardGroup, Card, Collapse } from "react-bootstrap";
-import { getAllCovers, deleteProductByID } from "../api";
+import { getAllCovers, deleteProductByID, DecQuantitiy } from "../api";
 import ProdCard from "./ProdCard";
 
 export default class cover extends Component {
@@ -9,7 +8,7 @@ export default class cover extends Component {
     super(props);
 
     this.state = {
-      covers: [],
+      cart: [],
     };
   }
 
@@ -27,9 +26,24 @@ export default class cover extends Component {
         console.log("API ERROR:", error);
       });
   }
+  /* ######################## Cart ##################### */
+  AddToCart = (prodcut) => {
+    this.setState({ cart: [...this.state.cart, prodcut] });
+    if (this.state.cart.includes(prodcut._id, 0)) {
+      alert("You Already added to cart!!");
+    } else {
+      this.props.AddToCart(prodcut);
+      console.log(prodcut.quantitiy);
+      console.log("hi from cover");
 
-  addToCart = (eve) => {
-    console.log("unfinished addtocart");
+      DecQuantitiy(prodcut._id, prodcut)
+        .then((response) => {
+          console.log("DecQuantitiy: ", response.data);
+        })
+        .catch((error) => {
+          console.log("API ERROR:", error);
+        });
+    }
   };
 
   deleteProoduct = (id) => {
@@ -51,19 +65,16 @@ export default class cover extends Component {
   };
 
   render() {
-    // console.log(this.state.cover.name)
-    // console.log(this.state.cover[1]);
-    // console.log(this.props.cover)
-
     const coverProdcut = this.props.covers.map((elem, index) => {
       if (elem.type === "cover") {
         return (
           <ProdCard
+            id={elem._id}
             name={elem.name}
             price={elem.price}
             quantity={elem.quantitiy}
-            id={elem._id}
             deleteProoduct={this.deleteProoduct}
+            AddToCart={this.AddToCart}
           />
         );
       }

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Product from "./Product";
 import { getAllProducts, getAllUsers } from "../api";
-import Cover from "../product/cover";
+import Cover from "../product/Cover";
 import Cable from "../product/cable";
 
 export default class Products extends Component {

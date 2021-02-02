@@ -4,15 +4,35 @@ import { Button, CardGroup, Card, Collapse } from "react-bootstrap";
 export default class ProdCard extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {};
+    this.state = {
+      Cart: {
+        ProdName: "",
+        ProdPrice: "",
+        quantity: "",
+        id: "",
+      },
+    };
   }
-
-  deleteProoduct = (event) => {
+  FoundProduct = (event) => {
     event.preventDefault();
-    this.props.deleteProoduct(this.props.id);
-  };
+    let quantity = this.props.quantity - 1;
+    const addedProd = {
+      name: this.props.name,
+      price: this.props.price,
+      quantitiy: quantity,
+      _id: this.props.id,
+    };
+    this.setState({ Cart: addedProd });
+    let cart = this.state.Cart;
+    console.log(cart);
+    this.props.AddToCart(cart);
+    console.log(this.state.Cart);
 
+    deleteProoduct = (event) => {
+      event.preventDefault();
+      this.props.deleteProoduct(this.props.id);
+    };
+  };
   render() {
     return (
       <div className="mr-3 mt-2 text-center">
@@ -27,7 +47,6 @@ export default class ProdCard extends Component {
               src={elem.background_image}
               style={{ width: "100%", height: "250px" }}
             /> */}
-
           <Card.Body>
             <Card.Title>{this.props.name}</Card.Title>
             <Card.Text>
@@ -49,8 +68,8 @@ export default class ProdCard extends Component {
             ) : (
               <Button
                 variant="outline-primary"
-                onClick={(eve) => {
-                  this.addToCart(eve);
+                onClick={(event) => {
+                  this.FoundProduct(event);
                 }}
               >
                 Add to Cart

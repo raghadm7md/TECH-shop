@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Switch, Route, Link, Redirect } from "react-ro
 import { Navbar, Nav, Form, FormControl, Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 // import { getAllProducts, getAllUsers } from "../api";
-import Cover from "./product/cover";
+import Cover from "./product/Cover";
 import PowerBanks from "./product/powerBank";
 import Cables from "./product/cable";
 import Login from "./components/Login";
@@ -18,6 +18,8 @@ import {LogOut } from "./api";
 import {
   getFromStorage
 } from './utils/storage';
+import Cart from "./product/Cart";
+import ProdCard from "./product/ProdCard";
 
 export default class App extends Component {
   constructor(props) {
@@ -39,8 +41,10 @@ export default class App extends Component {
       name:"",
       signInEmail:"",
       signInPassword:"",
+      cart: [],
+
     };
-    
+    this.AddToCart = this.AddToCart.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.LogToken = this.LogToken.bind(this)
     this.onlogout = this.onlogout.bind(this)
@@ -61,7 +65,7 @@ console.log(this.dynamicSearch())
      });
     console.log(this.state.searchValue)
   }
-  
+
   funcSetCvr = (newCvr) => {
     this.setState({ covers: newCvr });
   };
@@ -145,6 +149,11 @@ console.log(this.dynamicSearch())
   }
 
 
+
+  AddToCart=(info)=>{
+    this.setState({ cart: [...this.state.cart, info] });
+    console.log("hi from App")
+  }
   render() {
 
     
@@ -197,7 +206,7 @@ console.log(this.dynamicSearch())
                 </Button>
                 </Link>
 
-                {this.state.isLoggedIn? <div className="myacc"><Nav.Link className="d-inline mr-2" as={Link} to="/profile">
+                {this.state.isLoggedIn ? <div className="myacc"><Nav.Link className="d-inline mr-2" as={Link} to="/profile">
                   My Account: {this.state.name} 
                 </Nav.Link>
                 <Button variant="secondary" onClick={this.onlogout}>Log Out</Button></div> : <Link to="/login">
@@ -205,11 +214,19 @@ console.log(this.dynamicSearch())
                     Sing in
                   </Button>
                 </Link>}
+
+                <Link to="/cart">
+                  <Button variant="outline-primary" onClick="">
+                    <img
+                      src="https://www.flaticon.com//vstatic/svg/833/833314.svg?token=exp=1612176439~hmac=2cfcee3809abe403d5864ff08b494741"
+                      width="20px"
+                    ></img>
+                  </Button>
+                </Link>
               </Form>
               </Nav>
               
 
-            </Form>
               <Link to="/login">
                   <Button variant="outline-primary" onClick="">
                     Sing in
@@ -240,14 +257,13 @@ console.log(this.dynamicSearch())
                   {/*  render={(props) => <Search {...props}  searchValue={this.state.searchValue} searchProduct={this.state.products}/>}> */}
                    </Route>
 
-                
                 {/* <Route path="/Search" component={() => <Search />}></Route> */}
 
               <Route
                 exact
                 path="/covers"
                 render={(props) => (
-                  <Cover {...props} covers={this.state.covers} setCvr={this.funcSetCvr} />
+                  <Cover {...props} covers={this.state.covers} setCvr={this.funcSetCvr} AddToCart={this.AddToCart}/>
                 )}
               />
 
@@ -258,13 +274,7 @@ console.log(this.dynamicSearch())
                   <PowerBanks {...props} powerBanks={this.state.powerbanks} setPowerbank={this.funcSetPowerBank}/>
                 )}
               />
-              <Route
-                exact
-                path="/Register"
-                render={(props) => (
-                  <Register {...props}/>
-                )}
-              />
+              
               <Route
                 exact
                 path="/cables"
@@ -272,6 +282,11 @@ console.log(this.dynamicSearch())
                   <Cables {...props} cables={this.state.cables} setCables={this.funcSetCable} />
                 )}
               />
+
+              
+
+
+
               {/* ######################## profile ##################### */}
                <Route
                 exact
@@ -288,6 +303,30 @@ console.log(this.dynamicSearch())
                 )}
               />
 
+
+              <Route
+                exact
+                path="/Register"
+                render={(props) => (
+                  <Register {...props}/>
+                )}
+              />
+
+
+              
+
+                <Route exact path="/addprod" render={() => <AddProd />} />
+             {/* ######################## Cart ##################### */}
+                <Route
+                  exact
+                  path="/cart"
+                  render={() => (
+                    <Cart
+                      // {...props}
+                      currentCart={this.state.cart}
+                    />
+                  )}
+                />
               </div>
             </Switch>
             {/* /////////////MASTER */}

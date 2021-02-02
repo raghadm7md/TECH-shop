@@ -86,10 +86,22 @@ export default class AddProd extends Component {
             <Form.Label>Quantitiy </Form.Label>
             <Form.Control
               type="Number"
-                onChange={(e) => {
-                  console.log("CHANGE: ", e.target.value);
-                  this.setState({ quantitiy: e.target.value });
-                }}
+              onChange={(e) => {
+                console.log("CHANGE: ", e.target.value);
+                this.setState({ quantitiy: e.target.value });
+              }}
+            />
+          </Form.Group>
+          <Form.Group controlId="formBasicEmail">
+            <Form.Label>Upload image for product </Form.Label>
+            <Form.Control
+              type="file"
+              onChange={(e) => {
+                console.log("CHANGE: ", e.target.files);
+                console.log("CHANGE: ", e.target.files[0]);
+                let image = e.target.files[0];
+                this.setState({ image: image });
+              }}
             />
           </Form.Group>
           <Button variant="primary" type="submit" onClick={this.AddToStock}>

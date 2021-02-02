@@ -183,10 +183,10 @@ export default class App extends Component {
                     type="text"
                     placeholder="search"
                     className="mr-sm-2"
-                    value={this.searchValue}
-                    onChange={(eve) => {
-                      this.handleChange(eve);
-                    }}
+                    value={this.state.searchValue}
+                    onChange={
+                      this.handleChange
+                    }
                   />
                   <Link to="/search">
                     <Button variant="outline-primary" className="mr-2">
@@ -243,7 +243,7 @@ export default class App extends Component {
                 ></Route>
 
                 <Route path="/search">
-                  <Search results={this.state.searchResult} />
+                  <Search  results={this.state.searchResult} />
                   {/*  render={(props) => <Search {...props}  searchValue={this.state.searchValue} searchProduct={this.state.products}/>}> */}
                 </Route>
 

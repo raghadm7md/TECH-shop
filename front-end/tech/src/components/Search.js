@@ -17,15 +17,7 @@ export default class Search extends Component {
   render() {
     console.log(this.props.searchValue);
 
-    const searchProdcut = this.props.searchProduct.map((elem, index) => {
-      console.log(this.props.searchValue);
-      console.log(this.props.searchProduct)
-
-      if (this.props.searchProduct[index].name == this.props.searchValue) {
-        
-        return <ProdCard name={elem.name} price={elem.price} />;
-      }
-    });
+    
 
     return (
       <div>

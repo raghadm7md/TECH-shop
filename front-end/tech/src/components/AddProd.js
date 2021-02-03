@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Navbar, Nav, Form, FormControl, Button } from "react-bootstrap";
 import {addProduct} from "../api";
+import { Redirect } from "react-router-dom";
 
 
 export default class AddProd extends Component {
@@ -12,6 +13,7 @@ export default class AddProd extends Component {
       type: "",
       description: "",
       quantitiy: "",
+      image:""
     };
   }
 
@@ -23,6 +25,7 @@ export default class AddProd extends Component {
       type: this.state.type,
       description: this.state.description,
       quantitiy: this.state.quantitiy,
+      image: this.state.image,
     };
     console.log(productInfo)
     addProduct(productInfo)
@@ -35,10 +38,21 @@ export default class AddProd extends Component {
       });
 
   };
+
+
+  redirectFunc = () => {
+    if(!this.props.isAdmin){
+      alert("Not Admin, NOT ALLOWED");
+      return <Redirect to='/' />
+    }
+  }
+
   render() {
     return (
       <div>
-        <h2>Add new product to Stock</h2>
+        {this.redirectFunc()}
+
+        <h1 className="display-4 App">Add New Product</h1>
         <Form>
           <Form.Group controlId="formBasicEmail">
             <Form.Label>Product name</Form.Label>
@@ -93,6 +107,15 @@ export default class AddProd extends Component {
             />
           </Form.Group>
           <Form.Group controlId="formBasicEmail">
+            <Form.Label>Image </Form.Label>
+            <Form.Control
+              type="Text"
+              onChange={(e) => {
+                this.setState({ image: e.target.value });
+              }}
+            />
+          </Form.Group>
+          <Form.Group controlId="formBasicEmail">
             <Form.Label>Upload image for product </Form.Label>
             <Form.Control
               type="file"
@@ -105,7 +128,7 @@ export default class AddProd extends Component {
             />
           </Form.Group>
           <Button variant="primary" type="submit" onClick={this.AddToStock}>
-            Add to the Stock
+            Add Product
           </Button>
         </Form>
       </div>

@@ -8,6 +8,10 @@ const UserSessionSchema = new mongoose.Schema({
     type: String,
     default: ''
   },
+  admin:{
+    type: Boolean,
+    default: false
+  },
   timestamp: {
     type: Date,
     default: Date.now()

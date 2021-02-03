@@ -8,21 +8,19 @@ export default class Search extends Component {
   constructor(props) {
     super(props)
     this.state = {	
-      SearchArr: [],	
+      // SearchArr: [],	
     };
   }
 
   
 
   render() {
-    console.log(this.props.searchValue);
-
-    
+    // console.log(this.props.searchValue);
 
     return (
       <div>
-       <h1 class="display-4">search prodcut </h1>
-{this.props.results.length > 0 ? this.props.results.map((e) => <h5>{e}</h5>) : "Empty"}
+       <h1 class="display-4">Search Results: </h1>
+{this.props.results.length > 0 ? this.props.results.map((e) => <h5>{e.name}</h5>) : "Empty"}
         {/*         <h1 class="display-4">search prodcut </h1>
 <CardGroup> {dynamicSearch} </CardGroup> */}
 

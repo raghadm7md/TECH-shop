@@ -75,6 +75,8 @@ export default class cover extends Component {
             id={elem._id}
             name={elem.name}
             price={elem.price}
+            image={elem.image}
+            admin={this.props.isAdmin}
             quantity={elem.quantitiy}
             deleteProoduct={this.deleteProoduct}
             AddToCart={this.AddToCart}

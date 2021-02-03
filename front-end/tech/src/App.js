@@ -46,6 +46,7 @@ export default class App extends Component {
       signInEmail: "",
       signInPassword: "",
       cart: [],
+      isAdmin:false,
     };
     this.AddToCart = this.AddToCart.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -57,17 +58,17 @@ export default class App extends Component {
   funcSetProducts = (newProd) => {
     this.setState({ products: newProd });
   };
-  dynamicSearch = (searchValue = this.state.searchValue) => {
-    return this.state.products.filter((name) =>
-      name.includes(searchValue)
-    );
+  
+  dynamicSearch = () => {
+    console.log(this.state.searchValue);
+    this.setState({searchResult: this.state.products.filter((product) =>
+      product.name.toLowerCase().includes(this.state.searchValue)
+      )})
   };
 
-  handleChange(event) {
-    console.log(this.dynamicSearch());
-    let result = this.dynamicSearch();
-    this.setState({ searchValue: event.target.value, searchResult: result });
-    console.log(this.state.searchValue);
+  handleChange = (event) => {
+    event.preventDefault()
+    this.setState({ searchValue: event.target.value});
   }
 
   funcSetCvr = (newCvr) => {
@@ -82,7 +83,7 @@ export default class App extends Component {
     this.setState({ cables: newCbl });
   };
 
-  LogToken = (token, name, signInEmail, signInPassword, rtoken) => {
+  LogToken = (token, name, signInEmail, signInPassword, rtoken, isAdmin) => {
     console.log("in app from login, ", name);
     this.setState({
       isLoggedIn: true,
@@ -91,6 +92,7 @@ export default class App extends Component {
       signInEmail: signInEmail,
       signInPassword: signInPassword,
       rtoken: rtoken,
+      isAdmin:isAdmin,
     });
   };
 
@@ -117,6 +119,7 @@ export default class App extends Component {
           this.setState({
             token: "",
             isLoggedIn: false,
+            isAdmin:false,
             redirect: true,
           });
 
@@ -135,7 +138,7 @@ export default class App extends Component {
   }
 
   renderRedirect = () => {
-    console.log("itsssssss");
+    console.log("redirect");
     if (this.state.redirect) {
       this.setState({ redirect: false });
       return <Redirect to="/login" />;
@@ -152,7 +155,7 @@ export default class App extends Component {
         {this.renderRedirect()}
         <div className="">
           <div>
-            <Navbar bg="light" variant="light" sticky="top">
+            <Navbar bg="light" variant="light" sticky="top" className="font-weight-bold">
               <Navbar.Brand href="#home">TECH</Navbar.Brand>
               <Nav className="mr-auto">
                 <Nav.Link as={Link} to="/">
@@ -173,9 +176,9 @@ export default class App extends Component {
 
                 {/* ######################## profile ##################### */}
 
-                <Nav.Link as={Link} to="/addprod">
-                  ADD PROD
-                </Nav.Link>
+                {this.state.isAdmin ? <Nav.Link className="red" as={Link} to="/addprod">
+                  <div className="admin" >Add Products </div>
+                </Nav.Link> : null }
               </Nav>
               <Nav>
                 <Form inline>
@@ -189,7 +192,7 @@ export default class App extends Component {
                     }
                   />
                   <Link to="/search">
-                    <Button variant="outline-primary" className="mr-2">
+                    <Button variant="outline-primary" className="mr-2" onClick={this.dynamicSearch}>
                       Search
                     </Button>
                   </Link>
@@ -201,7 +204,7 @@ export default class App extends Component {
                         as={Link}
                         to="/profile"
                       >
-                        My Account: {this.state.name}
+                        My Account: <div className="d-inline name">{this.state.name}</div> 
                       </Nav.Link>
                       <Button variant="secondary" onClick={this.onlogout}>
                         Log Out
@@ -209,14 +212,14 @@ export default class App extends Component {
                     </div>
                   ) : (
                     <Link to="/login">
-                      <Button variant="outline-primary" onClick="">
+                      <Button variant="outline-success" onClick="">
                         Sing in
                       </Button>
                     </Link>
                   )}
 
                   <Link to="/cart">
-                    <Button variant="outline-primary" onClick="">
+                    <Button variant="outline-light" onClick="" className="ml-2">
                       <img
                         src="https://www.flaticon.com//vstatic/svg/833/833314.svg?token=exp=1612176439~hmac=2cfcee3809abe403d5864ff08b494741"
                         width="20px"
@@ -229,23 +232,31 @@ export default class App extends Component {
             </Navbar>
             <Switch>
               <div className="container">
-                <Route exact path="/" render={() => <HomePage />}></Route>
+                <Route exact path="/" render={() => <HomePage name={this.state.name}/>}></Route>
 
                 <Route
                   path="/allproducts"
                   render={() => (
                     <Products
                       prods={this.state.products}
+                      isAdmin={this.state.isAdmin}
                       setProducts={this.funcSetProducts}
                       isLoggedIn={this.state.isLoggedIn}
                     />
                   )}
                 ></Route>
 
-                <Route path="/search">
-                  <Search  results={this.state.searchResult} />
-                  {/*  render={(props) => <Search {...props}  searchValue={this.state.searchValue} searchProduct={this.state.products}/>}> */}
-                </Route>
+                <Route path="/search"
+                
+                render={(props) => (
+                  <Search
+                    {...props}
+                    results={this.state.searchResult} 
+                  />
+                )}
+                
+                />
+                  
 
                 {/* <Route path="/Search" component={() => <Search />}></Route> */}
 
@@ -257,6 +268,7 @@ export default class App extends Component {
                       {...props}
                       covers={this.state.covers}
                       setCvr={this.funcSetCvr}
+                      isAdmin={this.state.isAdmin}
                       AddToCart={this.AddToCart}
                     />
                   )}
@@ -270,6 +282,7 @@ export default class App extends Component {
                       {...props}
                       powerBanks={this.state.powerbanks}
                       setPowerbank={this.funcSetPowerBank}
+                      isAdmin={this.state.isAdmin}
                     />
                   )}
                 />
@@ -282,12 +295,13 @@ export default class App extends Component {
                       {...props}
                       cables={this.state.cables}
                       setCables={this.funcSetCable}
+                      isAdmin={this.state.isAdmin}
                     />
                   )}
                 />
 
                 {/* ######################## profile ##################### */}
-                <Route exact path="/profile" component={Profile} />
+                <Route exact path="/profile" render={() => <Profile token={this.state.rtoken} />}/>
                 <Route
                   path="/login"
                   component={() => (
@@ -299,7 +313,7 @@ export default class App extends Component {
                   )}
                 ></Route>
 
-                <Route exact path="/addprod" render={() => <AddProd />} />
+                <Route exact path="/addprod" render={() => <AddProd isAdmin={this.state.isAdmin} />} />
 
                 <Route
                   exact
@@ -307,7 +321,7 @@ export default class App extends Component {
                   render={(props) => <Register {...props} />}
                 />
 
-                <Route exact path="/addprod" render={() => <AddProd />} />
+
                 {/* ######################## Cart ##################### */}
                 <Route
                   exact

@@ -40,6 +40,8 @@ export default class Register extends Component {
   }
     return (
       <div>
+        <h1 className="display-4">Register</h1>
+
         <Form>
           <Form.Group controlId="formBasicEmail">
             <Form.Label>Your full name </Form.Label>
@@ -78,14 +80,13 @@ export default class Register extends Component {
           
         </Form>
         <Button
-      
             variant="primary"
             type="submit"
             onClick={(e) => {
               this.register(e);
             }}
           >
-            Submit
+            Register
           </Button>
       </div>
     );

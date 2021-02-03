@@ -30,7 +30,7 @@ router.get("/product", (req, res) => {
 });
 
 //MHMD: UNUSED ROUTE / MAY USE LATER / WORKING FINE 
-router.get("/covers", (req, res) => {
+router.get("/api/product/covers", (req, res) => {
   console.log("GET /cover");
   Product.find({type: "cover"}, function (err, data) {
     res.json(data);

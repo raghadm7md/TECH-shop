@@ -50,14 +50,6 @@ app.use(bodyParser.urlencoded({extended:true}))
 
 
 
- app.get("/product", (req, res) => {
-  console.log("GET /product");
-  Product.find({}, function (err, data) {
-    res.json(data);
-    
-  });
-});
-
 // Add `bodyParser` middleware which will parse JSON requests
 // into JS objects before they reach the route files.
 //
@@ -76,8 +68,8 @@ app.use(express.json());
 /*** Routes ***/
 
 // Mount imported Routers
-app.use('api/product/',productRouter);
-app.use('api/user/',userRouter);
+app.use('/api/product/',productRouter);
+app.use('/api/user/',userRouter);
 
 
 // app.use(function(req,res,next){

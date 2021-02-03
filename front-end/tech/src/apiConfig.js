@@ -1,7 +1,8 @@
 const EXPRESS_PORT = 5000;
 
 const apiUrls = {
-  development: `http://localhost:${EXPRESS_PORT}`,
+  // development: `http://localhost:${EXPRESS_PORT}`,
+  development: `/api`,
   production: `https://YOUR_HEROKU_URL.herokuapp.com`,
 };
 

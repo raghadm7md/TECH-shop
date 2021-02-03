@@ -11,6 +11,7 @@ const bodyParser=require("body-parser");
 const productRouter = require('./routes/products');
 const userRouter = require('./routes/users');
 const db_url = require('./db');
+const Product = require('./models/product')
 
 // here for add image ##################
 // const fileUpload = require('express-fileupload');

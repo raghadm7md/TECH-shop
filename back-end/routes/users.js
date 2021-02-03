@@ -7,12 +7,7 @@ const {User , Order,} =require('../models/user')
 /* ============================================== */
 // to can see the body from req instead of undefined
 router.use(express.json());
-mongoose.connect("mongodb://localhost:27017/tech", {
-  useNewUrlParser: true,
-});
-mongoose.connection.once("open", () => {
-  console.log("DB IS CONNECTED !!!");
-});
+
 /* ============================================== */
 
 router.get("/testUsers", (req, res) => {

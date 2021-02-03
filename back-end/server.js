@@ -1,7 +1,5 @@
 require("dotenv").config();
 
-
-
 const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
@@ -29,7 +27,7 @@ const db_url = require('./db');
 
 /* ============================================== */
 // Establish Database Connection
-mongoose.connect(proccess.env.mongoDBURL, { useNewUrlParser: true });
+mongoose.connect(process.env.mongoDBURL, { useNewUrlParser: true });
 mongoose.connection.once('open', () => {
   console.log('Connected to Mongo');
 });
@@ -77,7 +75,18 @@ app.use('/api/user/',userRouter);
 /* ============================================== */
 
 
-var whitelist = [`http://localhost:${PORT}`, "http://example2.com"];
+
+
+
+//must change your port to this for deployment else it wont work
+const PORT = process.env.PORT;
+
+
+
+
+
+
+var whitelist = [`http://localhost:${PORT}`];
 
 var corsOptions = {
   origin: function (origin, callback) {
@@ -96,16 +105,13 @@ app.use(cors(corsOptions));
 
 
 
-//must change your port to this for deployment else it wont work
-const PORT = process.env.PORT;
-
 //serves all our static files from the build directory.
-app.use(express.static(path.join(__dirname, "build")));
+app.use(express.static(__dirname + "/build"));
 
 // After all routes
 // This code essentially serves the index.html file on any unknown routes.
 app.get("/*", (req, res) => {
-  res.sendFile(path.join(__dirname, "build", "index.html"));
+  res.sendFile(path.join__dirname+"/build/index.html");
 });
 
 app.listen(PORT);

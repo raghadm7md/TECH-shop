@@ -37,9 +37,14 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}))
 /* ============================================== */
 
- app.get("/allproducts", (req, res) => {
+ app.get("/", (req, res) => {
   console.log("GET /");
-  res.json("WORKING FROM SEVER.JS zzz");
+  res.json("WORKING FROM SEVER.JS aaa");
+ });
+
+ app.get("/a", (req, res) => {
+  console.log("GET /");
+  res.json("WORKING FROM SEVER.JS bbb");
  });
 
 // Add `bodyParser` middleware which will parse JSON requests

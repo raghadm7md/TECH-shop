@@ -65,8 +65,8 @@ app.use(express.json());
 /*** Routes ***/
 
 // Mount imported Routers
-app.use('/api/product/',productRouter);
-app.use('/api/user/',userRouter);
+app.use('api/product/',productRouter);
+app.use('api/user/',userRouter);
 
 
 // app.use(function(req,res,next){

@@ -91,7 +91,7 @@ const PORT = process.env.PORT;
 
 
 
-var whitelist = [`http://localhost:${PORT}`];
+var whitelist = [`http://localhost:${PORT}`, 'https://techproject3.herokuapp.com'];
 
 var corsOptions = {
   origin: function (origin, callback) {

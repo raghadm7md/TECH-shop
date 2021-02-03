@@ -68,6 +68,7 @@ export default class Products extends Component {
   
     return (
       <div>
+        <h1 class="display-4 ">Welcome, {this.props.name}</h1>
         
         <h1 class="display-4 ">All Products</h1>
         {allProducts.length ? <CardGroup> {allProducts} </CardGroup> : <h4>No products!</h4>}

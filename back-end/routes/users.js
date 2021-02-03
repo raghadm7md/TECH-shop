@@ -17,7 +17,7 @@ router.get("/testUsers", (req, res) => {
 
 
 //MHMD
-router.get("/user", (req, res) => {
+router.get("/userrr", (req, res) => {
   console.log("GET /user");
   User.find({}, function (err, data) {
     res.json(data);

@@ -113,7 +113,7 @@ export default class EditProfile extends Component {
             />
           </Form.Group>
           <Button variant="primary" type="submit" onClick={this.submitInfo}>
-            Submit
+            SAVE
           </Button>
         </Form>
       </div>

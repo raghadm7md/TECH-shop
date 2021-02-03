@@ -239,6 +239,7 @@ export default class App extends Component {
                   path="/allproducts"
                   render={() => (
                     <Products
+                      name={this.state.name}
                       prods={this.state.products}
                       isAdmin={this.state.isAdmin}
                       setProducts={this.funcSetProducts}

@@ -100,7 +100,7 @@ router.get("/userById/:id", (req, res) => {
 
 /* ============================================== */
 //NAJD
-router.post("/user", (req, res) => {
+router.post("/api/register", (req, res) => {
   console.log("POST /User");
   console.log("BODY: ", req.body);
 

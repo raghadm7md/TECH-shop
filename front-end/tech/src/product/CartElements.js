@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Button, CardGroup, Card, Collapse } from "react-bootstrap";
-import { DecQuantitiy } from "../api";
 
 
 export default class CartElements extends Component {
@@ -16,10 +15,7 @@ export default class CartElements extends Component {
     let num = this.state.count;
     num++;
     this.setState({ count: num });
-    // console.log("Cart = "+num);
-    // let Q=this.props.quantity
-    // console.log("DB = "+Q)
-    // let count= Q-num
+    // send the Q
     this.props.getCount(num,this.props.id)
   };
   
@@ -28,17 +24,11 @@ export default class CartElements extends Component {
     num--;
     if(num>=1){
     this.setState({ count: num });
-    // console.log("Cart = "+num);
-    // let Q=this.props.quantity
-    // console.log("DB = "+Q)
-    // let count= Q-num
+    // send the Q
     this.props.getCount(num,this.props.id)
     
     }
   };
-
-  
-
     render() {
         return (
           <div>

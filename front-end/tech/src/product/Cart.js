@@ -19,9 +19,10 @@ export default class Cart extends Component {
 
   // add function for buy button (add to order and edit the quantity in DB )
   // add function that sum the prices and give the total
-  getCount=(count,id)=>{
+  getCount=(count,id,Q)=>{
     this.setState({count:count})
     this.setState({id:id})
+
 
     console.log(this.state.count)
 

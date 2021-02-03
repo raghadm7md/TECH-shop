@@ -40,8 +40,9 @@ const login = (req) => {
     password: req.password,
   });
 };
+
 const registeration = (req) => {
-  return axios.post(`/api/register`, req);
+  return axios.post(`/api/user/register`, req);
 };
 // ###################### EditUser
 const EditUser = (id, info) => {

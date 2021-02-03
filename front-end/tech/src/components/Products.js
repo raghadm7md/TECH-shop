@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import Product from "./Product";
-import { getAllProducts, getAllUsers } from "../api";
-import Cover from "../product/cover";
-import Cable from "../product/cable";
+import { getAllProducts, deleteProductByID } from "../api";
+import ProdCard from "../product/ProdCard";
+import { CardGroup } from "react-bootstrap";
 
 export default class Products extends Component {
   constructor(props) {
@@ -28,34 +28,50 @@ export default class Products extends Component {
       });
    }
 
+   deleteProoduct = (id) => {
+    console.log("The Product ID to Delete", id);
+
+    deleteProductByID(id)
+      .then((response) => {
+        console.log(`The Product with the ID ${id} has been deleted.`);
+
+        const newProductsList = this.props.prods.filter((prods) => {
+          return prods._id !== id;
+        });
+
+        this.props.setProducts(newProductsList);
+      })
+      .catch((error) => {
+        console.log("API ERROR:", error);
+      });
+  };
 
 
   render() {
     
 
-    if(this.props.isLoggedIn){
-      return <h1> WELCOMMMMEEEE</h1>
-    }
 
     const allProducts = this.props.prods.map((elem, index) => {
-      return <Product name={elem.name} price={elem.price} key={index} />;
+      return (
+        <ProdCard
+            id={elem._id}
+            name={elem.name}
+            price={elem.price}
+            image={elem.image}
+            admin={this.props.isAdmin}
+            quantity={elem.quantitiy}
+            deleteProoduct={this.deleteProoduct}
+          />
+      )
     });
 
-    // const coverProdcut = this.props.prods.map((elem, index) => {
-    //   return <Cover name={elem.name} price={elem.price} type={elem.type} />;
-    // });
-
-    // const cableProdcut = this.props.prods.map((elem, index) => {
-    //   return <Cable name={elem.name} price={elem.price} type={elem.type} />;
-    // });
-    
+  
     return (
       <div>
         
-        <h1>ALL PRODS:</h1>
-        {allProducts.length ? allProducts : <h4>No Products!</h4>}
+        <h1 class="display-4 ">All Products</h1>
+        {allProducts.length ? <CardGroup> {allProducts} </CardGroup> : <h4>No products!</h4>}
 
-        {/* {coverProdcut} */}
 
       </div>
     );

@@ -84,7 +84,7 @@ onTextboxChangeSignInPassword(event) {
           });
           
           this.renderRedirect();
-          this.props.LogToken(response.data.token,response.data.name,signInEmail,signInPassword,response.data.rtoken)
+          this.props.LogToken(response.data.token,response.data.name,signInEmail,signInPassword,response.data.rtoken,response.data.admin)
 
         } else {
           console.log("NO");
@@ -114,7 +114,7 @@ onTextboxChangeSignInPassword(event) {
   render() {
 
     if (this.state.redirect) {
-      return <Redirect to="/allproducts" />
+      return <Redirect to="/" />
     }
     return (
       <div >

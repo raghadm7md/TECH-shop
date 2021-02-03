@@ -42,7 +42,14 @@ body{
   }
 }
 
+.admin{
+  font-weight: bold;
+  color: rgb(241, 135, 135);
+}
 
+.name{
+  text-decoration: underline;
+}
 
 .red {
   color:red

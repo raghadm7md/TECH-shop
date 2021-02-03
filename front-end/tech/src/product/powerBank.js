@@ -50,9 +50,12 @@ export default class powerBank extends Component {
       if (this.props.powerBanks[index].type === "PowerBank") {
         return (
           <ProdCard
+            id={elem._id}
             name={elem.name}
             price={elem.price}
-            id={elem._id}
+            image={elem.image}
+            admin={this.props.isAdmin}
+            quantity={elem.quantitiy}
             deleteProoduct={this.deleteProoduct}
           />
         );
@@ -61,7 +64,7 @@ export default class powerBank extends Component {
 
     return (
       <div>
-        <h1 class="display-4">All Power Banks</h1>
+        <h1 class="display-4 ">All Power Banks</h1>
         <CardGroup> {PowerBanksProdcut} </CardGroup>
       </div>
     );

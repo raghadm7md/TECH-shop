@@ -84,10 +84,10 @@ router.post('/register',(req,res)=>{
 
 
 //another app.get (to get ONE user only by ID)
-router.get("/userById", (req, res) => {
-  console.log(req.query.id);
+router.get("/userById/:id", (req, res) => {
+  console.log(req.params.id);
   console.log("GET /getById");
-  User.findById(req.query.id, function (err, result) {
+  User.findById(req.params.id, function (err, result) {
     if (err) {
       console.log("ERR: ", err);
     } else {
@@ -244,8 +244,9 @@ router.post('/login', (req, res, next) => {
     const userSession = new UserSession();
     userSession.userId = user._id;
     userSession.name = user.name;
+    userSession.admin = user.isAdmin;
 
-    console.log("mmmm",user._id);
+    console.log("mmmm", user.isAdmin);
     userSession.save((err, doc) => {
       if (err) {
         console.log(err);
@@ -260,8 +261,8 @@ router.post('/login', (req, res, next) => {
         name:doc.name,
         message: 'Valid sign in',
         token:doc._id,
-        rtoken:user._id
-        
+        rtoken:user._id,
+        admin:user.isAdmin
       });
     });
   });

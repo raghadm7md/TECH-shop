@@ -20,9 +20,12 @@ const getAllCables = () => {
   return axios.get(`${API_URL}/cables`);
 };
 
-// Delete products by ID
 const getAllUsers = (id) => {
   return axios.get(`${API_URL}/user`);
+};
+
+const getUserbyID = (id) => {
+  return axios.get(`${API_URL}/userById/${id}`);
 };
 
 const deleteProductByID = (id) => {
@@ -85,4 +88,5 @@ export {
   LogOut,
   deleteProductByID,
   DecQuantitiy,
+  getUserbyID,
 };

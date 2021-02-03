@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Navbar, Nav, Form, FormControl, Button } from "react-bootstrap";
-import { getAllProducts, getAllUsers } from "../api";
+import { getAllProducts, getAllUsers ,getUserbyID} from "../api";
 import EditProfile from "./EditProfile";
 
 export default class Profile extends Component {
@@ -28,17 +28,17 @@ export default class Profile extends Component {
   };
 
   componentDidMount() {
-    getAllUsers()
+    getUserbyID(this.props.token)
       .then((response) => {
-        console.log("RESSSS: ", response.data);
+        console.log("res: ", response.data);
         this.setState({ user: response.data[2] });
 
         let user = this.state.user;
-        this.setState({ name: user.name });
-        this.setState({ email: user.email });
-        this.setState({ country: user.Address.country });
-        this.setState({ city: user.Address.city });
-        this.setState({ HouseNumber: user.Address.houseNumber });
+        this.setState({ name: response.data.name });
+        this.setState({ email: response.data.email });
+        this.setState({ country: response.data.Address.country });
+        this.setState({ city: response.data.Address.city });
+        this.setState({ HouseNumber: response.data.Address.houseNumber });
       })
       .catch((error) => {
         console.log("API ERROR:", error);
@@ -59,8 +59,7 @@ export default class Profile extends Component {
       <div>
         <Form>
           <Form.Group controlId="formBasicEmail">
-            <Form.Label>Username</Form.Label>
-            <p>{this.state.name}</p>
+            <Form.Label>Username: {this.state.name}</Form.Label>
           </Form.Group>
           <Form.Group controlId="formBasicEmail">
             <Form.Label>Email address</Form.Label>
@@ -84,7 +83,7 @@ export default class Profile extends Component {
           </Button>
         </Form>
         {this.state.showComponent ? (
-          <EditProfile hide={this.hide} EditInfo={this.EditInfo} />
+          <EditProfile hide={this.hide} EditInfo={this.EditInfo} token={this.props.token}/>
         ) : null}
       </div>
     );

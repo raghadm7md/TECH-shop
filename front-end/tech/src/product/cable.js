@@ -49,9 +49,12 @@ export default class cable extends Component {
       if (this.props.cables[index].type === "cable") {
         return (
           <ProdCard
+            id={elem._id}
             name={elem.name}
             price={elem.price}
-            id={elem._id}
+            image={elem.image}
+            admin={this.props.isAdmin}
+            quantity={elem.quantitiy}
             deleteProoduct={this.deleteProoduct}
           />
         );

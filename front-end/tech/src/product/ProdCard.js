@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Button, CardGroup, Card, Collapse } from "react-bootstrap";
 
-
 export default class ProdCard extends Component {
   constructor(props) {
     super(props);
@@ -14,7 +13,7 @@ export default class ProdCard extends Component {
       },
     };
   }
-  
+
   FoundProduct = (event) => {
     event.preventDefault();
     let quantity = this.props.quantity - 1;
@@ -30,6 +29,7 @@ export default class ProdCard extends Component {
     console.log(cart);
     this.props.AddToCart(cart);
  
+    console.log(this.state.Cart);
   };
 
   deleteProoduct = (event) => {
@@ -37,21 +37,21 @@ export default class ProdCard extends Component {
     this.props.deleteProoduct(this.props.id);
   };
 
-
   render() {
     return (
       <div className="mr-3 mt-2 text-center">
         <Card
           border="dark"
           bg="light"
-          style={{ width: "12rem", height: "15rem" }}
+          style={{ width: "15rem", height: "350px" }}
         >
+
           {/* this is the image of the prod will be added later */}
-          {/* <Card.Img
+          <Card.Img
               variant="top"
-              src={elem.background_image}
-              style={{ width: "100%", height: "250px" }}
-            /> */}
+              src={this.props.image}
+              style={{ width: "100%", height: "150px" }}
+            />
           <Card.Body>
             <Card.Title>{this.props.name}</Card.Title>
             <Card.Text>
@@ -66,27 +66,33 @@ export default class ProdCard extends Component {
           </Card.Body>
           <Card.Footer>
             {/* <small className="text-muted">?????????</small> */}
-            {this.props.quantity === 0 ? (
-              <Button variant="secondary" disabled>
-                Out of Stock
-              </Button>
-            ) : (
+
+            {this.props.admin ? (
               <Button
-                variant="outline-primary"
-                onClick={(event) => {
-                  this.FoundProduct(event);
-                }}
-              >
-                Add to Cart
-              </Button>
-            )}{" "}
-            <Button
-              variant="secondary"
-              variant="outline-primary"
+              className="mt-1"
+              variant="danger"
               onClick={this.deleteProoduct}
             >
-              remove from Cart
+              REMOVE
             </Button>
+            ) : (
+              [
+                this.props.quantity === 0 ? (
+                  <Button variant="secondary" disabled>
+                Out of Stock
+              </Button>
+                ) : (
+                  <Button
+                    variant="outline-primary"
+                    onClick={(event) => {
+                      this.FoundProduct(event);
+                    }}
+                  >
+                    Add to Cart
+                  </Button>
+                ),
+              ]
+            )}
           </Card.Footer>
         </Card>
         <br />

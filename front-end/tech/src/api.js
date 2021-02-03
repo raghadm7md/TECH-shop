@@ -29,7 +29,7 @@ const getUserbyID = (id) => {
 };
 
 const deleteProductByID = (id) => {
-  return axios.delete(`/api/user/product/product/${id}`);
+  return axios.delete(`/api/product/product/${id}`);
 };
 
 //////////////////NAJD
@@ -57,14 +57,14 @@ const addProduct = (info) => {
 
 const SingIn = (signInEmail, signInPassword) => {
   console.log("AAAAAAAA", signInEmail);
-  return axios.post(`/api/login`, {
+  return axios.post(`/api/user/login`, {
     email: signInEmail,
     password: signInPassword,
   });
 };
 
 const LogOut = (signInEmail, signInPassword, token) => {
-  return axios.get(`/api/logout?token=` + token, {
+  return axios.get(`/api/user/logout?token=` + token, {
     email: signInEmail,
     password: signInPassword,
   });

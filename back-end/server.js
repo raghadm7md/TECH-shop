@@ -38,10 +38,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}))
 /* ============================================== */
 
- app.get("/", (req, res) => {
-  console.log("GET /");
-  res.json("WORKING FROM SEVER.JS aaa");
- });
+//  app.get("/", (req, res) => {
+//   console.log("GET /");
+//   res.json("WORKING FROM SEVER.JS aaa");
+//  });
 
  app.get("/a", (req, res) => {
   console.log("GET /");

@@ -47,6 +47,16 @@ app.use(bodyParser.urlencoded({extended:true}))
   res.json("WORKING FROM SEVER.JS bbb");
  });
 
+
+
+ app.get("/product", (req, res) => {
+  console.log("GET /product");
+  Product.find({}, function (err, data) {
+    res.json(data);
+    
+  });
+});
+
 // Add `bodyParser` middleware which will parse JSON requests
 // into JS objects before they reach the route files.
 //

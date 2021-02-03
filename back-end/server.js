@@ -39,7 +39,7 @@ app.use(bodyParser.urlencoded({extended:true}))
 
  app.get("/", (req, res) => {
   console.log("GET /");
-  res.json("WORKING FROM SEVER.JS");
+  res.json("WORKING FROM SEVER.JS zzz");
  });
 
 // Add `bodyParser` middleware which will parse JSON requests

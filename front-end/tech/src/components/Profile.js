@@ -19,7 +19,7 @@ export default class Profile extends Component {
   }
 
   EditProfile = () => {
-    this.setState({ showComponent: true });
+    this.setState({ showComponent: !this.state.showComponent });
     console.log(this.state.showComponent);
   };
   hide = () => {
@@ -56,7 +56,7 @@ export default class Profile extends Component {
 
   render() {
     return (
-      <div>
+      <div className ="profile">
         <Form>
           <Form.Group controlId="formBasicEmail">
             <Form.Label>Username: {this.state.name}</Form.Label>

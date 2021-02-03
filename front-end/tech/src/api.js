@@ -20,7 +20,7 @@ const getAllCables = () => {
   return axios.get(`/api/product/cables`);
 };
 
-const getAllUsers = (id) => {
+const getAllUsers = () => {
   return axios.get(`/api/user/user`);
 };
 

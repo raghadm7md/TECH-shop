@@ -116,7 +116,7 @@ app.use(express.static(__dirname + "/build"));
 // After all routes
 // This code essentially serves the index.html file on any unknown routes.
 app.get("/*", (req, res) => {
-  res.sendFile(path.join__dirname+"/build/index.html");
+  res.sendFile(__dirname+"/build/index.html");
 });
 
 app.listen(PORT);

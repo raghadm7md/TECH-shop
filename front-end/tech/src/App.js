@@ -235,6 +235,7 @@ export default class App extends Component {
                 <Route exact path="/" render={() => <HomePage name={this.state.name}/>}></Route>
 
                 <Route
+                  exact
                   path="/allproducts"
                   render={() => (
                     <Products
@@ -303,6 +304,7 @@ export default class App extends Component {
                 {/* ######################## profile ##################### */}
                 <Route exact path="/profile" render={() => <Profile token={this.state.rtoken} />}/>
                 <Route
+                exact
                   path="/login"
                   component={() => (
                     <Login

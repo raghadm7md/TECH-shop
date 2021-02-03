@@ -48,7 +48,7 @@ const registeration = (req) => {
 const EditUser = (id, info) => {
   console.log("xxxx",id);
   console.log("zzzzz",info);
-  return axios.put(`/api/user/`, info);
+  return axios.put(`/api/user`, info);
 };
 
 // Add new product ###########

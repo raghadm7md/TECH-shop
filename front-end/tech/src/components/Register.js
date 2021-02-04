@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Navbar, Nav, Form, FormControl, Button } from "react-bootstrap";
+import { Redirect } from "react-router-dom";
 import {registeration} from "../api.js"
 
 import Login from "./Login";
@@ -36,7 +37,7 @@ export default class Register extends Component {
 
   render() {
     if(this.state.redirectLogin) {
-      return <Login to={'/login'}/>
+      return <Redirect to={'/login'}/>
   }
     return (
       <div>

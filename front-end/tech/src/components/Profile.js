@@ -79,7 +79,7 @@ export default class Profile extends Component {
           </Button>
         </Form>
         {this.state.showComponent ? (
-          <EditProfile hide={this.hide} EditInfo={this.EditInfo} token={this.props.token}/>
+          <EditProfile hide={this.hide} EditInfo={this.EditInfo} token={this.props.token} editName={this.props.editName}/>
         ) : null }
       </div>
     );

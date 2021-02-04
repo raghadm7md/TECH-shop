@@ -139,12 +139,14 @@ router.post('/user/order', (req, res) => {
 /* ============================================== */
 //Meshal
 router.put('/user/:id', (req, res) => {
-
+console.log("BELLOOOOWWW");
+console.log(req.params.id);
+console.log(req.body);
   User.findOneAndUpdate({ _id: req.params.id }, req.body, (err, result) => {
     if (err) {
       res.json(err);
     } else {
-      res.json(result);
+      res.json("YES");
     }
   });
 });

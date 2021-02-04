@@ -101,7 +101,10 @@ export default class App extends Component {
       isLoggedIn: false,
     });
   };
-
+  
+  editName = (name) => {
+    this.setState({name:name})
+  }
   onlogout() {
     const obj = getFromStorage("the_main_app");
     console.log("AAA", obj);
@@ -303,7 +306,7 @@ export default class App extends Component {
                 />
 
                 {/* ######################## profile ##################### */}
-                <Route exact path="/profile" render={() => <Profile token={this.state.rtoken} />}/>
+                <Route exact path="/profile" render={() => <Profile token={this.state.rtoken} editName={this.editName}/>}/>
                 <Route
                 exact
                   path="/login"

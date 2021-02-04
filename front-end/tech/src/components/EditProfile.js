@@ -31,6 +31,7 @@ export default class EditProfile extends Component {
     //////CHANGED ID TO DYN
     EditUser(this.props.token,info)
       .then((response) => {
+        this.props.editName(this.state.name)
         console.log("user: ", response.data);
 
       })

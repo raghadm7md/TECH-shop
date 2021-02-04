@@ -47,7 +47,9 @@ export default class App extends Component {
       signInPassword: "",
       cart: [],
       isAdmin:false,
+      order: []
     };
+
     this.AddToCart = this.AddToCart.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.LogToken = this.LogToken.bind(this);
@@ -101,10 +103,12 @@ export default class App extends Component {
       isLoggedIn: false,
     });
   };
+
   
   editName = (name) => {
     this.setState({name:name})
   }
+
   onlogout() {
     const obj = getFromStorage("the_main_app");
     console.log("AAA", obj);
@@ -152,6 +156,20 @@ export default class App extends Component {
     this.setState({ cart: [...this.state.cart, info] });
     console.log("hi from App");
   };
+
+  RemoveFromCart = (info) => {
+    this.setState({ cart: [...this.state.cart, info] });
+    console.log("hi from App");
+  };
+
+orderInfo =(info)=>{
+
+  this.setState({ order: [...this.state.order, info] });
+
+  // console.log("hi from order", info)
+
+}
+
   render() {
     return (
       <Router>
@@ -288,6 +306,7 @@ export default class App extends Component {
                       powerBanks={this.state.powerbanks}
                       setPowerbank={this.funcSetPowerBank}
                       isAdmin={this.state.isAdmin}
+                      AddToCart={this.AddToCart}
                     />
                   )}
                 />
@@ -301,12 +320,14 @@ export default class App extends Component {
                       cables={this.state.cables}
                       setCables={this.funcSetCable}
                       isAdmin={this.state.isAdmin}
+                      AddToCart={this.AddToCart}
                     />
                   )}
                 />
 
+
                 {/* ######################## profile ##################### */}
-                <Route exact path="/profile" render={() => <Profile token={this.state.rtoken} editName={this.editName}/>}/>
+                <Route exact path="/profile" render={() => <Profile token={this.state.rtoken} editName={this.editName} order={this.state.order}/>}/>
                 <Route
                 exact
                   path="/login"
@@ -336,6 +357,7 @@ export default class App extends Component {
                     <Cart
                       {...props}
                       currentCart={this.state.cart}
+                      orderInfo={this.orderInfo}
                     />
                   )}
                 />

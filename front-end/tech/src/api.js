@@ -76,6 +76,13 @@ const DecQuantitiy = (id, info) => {
   return axios.put(`/api/product/product/${id}`, info);
 };
 
+
+
+//edite count
+const CartQuntity = (id, info) => {
+  return axios.put(`${API_URL}/product/${id}`, info);
+};
+
 export {
   getAllProducts,
   getAllUsers,
@@ -91,4 +98,5 @@ export {
   deleteProductByID,
   DecQuantitiy,
   getUserbyID,
+  CartQuntity
 };

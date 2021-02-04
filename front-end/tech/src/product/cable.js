@@ -1,13 +1,15 @@
 import React, { Component } from "react";
 import ProdCard from "./ProdCard";
 import { CardGroup } from "react-bootstrap";
-import { getAllCables, deleteProductByID } from "../api";
+import { getAllCables, deleteProductByID , DecQuantitiy } from "../api";
 
 export default class cable extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {};
+    this.state = {
+      cart:[],
+    };
   }
 
   componentDidMount() {
@@ -24,6 +26,29 @@ export default class cable extends Component {
         console.log("API ERROR:", error);
       });
   }
+
+  AddToCart = (prodcut) => {
+    this.setState({ cart: [...this.state.cart, prodcut] });
+    if (this.state.cart.includes(prodcut._id, 0)) {
+      alert("You Already added to cart!!");
+    } else {
+
+      console.log(prodcut)
+      console.log(prodcut.name)
+      console.log(prodcut.price)
+      console.log(prodcut.quantitiy);
+      this.props.AddToCart(prodcut);
+      console.log("hi from cover");
+
+      DecQuantitiy(prodcut._id, prodcut)
+        .then((response) => {
+          console.log("DecQuantitiy: ", response.data);
+        })
+        .catch((error) => {
+          console.log("API ERROR:", error);
+        });
+    }
+  };
 
   deleteProoduct = (id) => {
     console.log("The Product ID to Delete", id);
@@ -49,13 +74,15 @@ export default class cable extends Component {
       if (this.props.cables[index].type === "cable") {
         return (
           <ProdCard
-            id={elem._id}
-            name={elem.name}
-            price={elem.price}
-            image={elem.image}
-            admin={this.props.isAdmin}
-            quantity={elem.quantitiy}
-            deleteProoduct={this.deleteProoduct}
+          id={elem._id}
+          name={elem.name}
+          price={elem.price}
+          image={elem.image}
+          admin={this.props.isAdmin}
+          quantity={elem.quantitiy}
+          count={elem.count}
+          deleteProoduct={this.deleteProoduct}
+          AddToCart={this.AddToCart}
           />
         );
       }

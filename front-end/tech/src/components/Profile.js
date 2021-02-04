@@ -14,8 +14,12 @@ export default class Profile extends Component {
         country: "",
         city: "",
         HouseNumber: 0,
+     
       },
+    listOforder:[],
+    order: this.props.order
     };
+
   }
 
   EditProfile = () => {
@@ -43,6 +47,7 @@ export default class Profile extends Component {
       .catch((error) => {
         console.log("API ERROR:", error);
       });
+      
   }
   
   EditInfo = (info) => {
@@ -54,7 +59,44 @@ export default class Profile extends Component {
     this.setState({ HouseNumber: info.Address.houseNumber });
   };
 
+  listOforder = () =>{
+    this.state.listOforder()
+
+  }
+
+  AddToCart = (info) => {
+    this.setState({ cart: [...this.state.cart, info] });
+    console.log("hi from App");
+  };
+ 
+
+
+
   render() {
+let showOrder = []
+
+    if(this.state.order.length !== 0 ){
+
+      this.state.order.forEach((element,index) => {
+
+        showOrder = this.state.order[index].map((item, index) => {
+
+          console.log(item.name)
+          return(
+            <ul >
+      
+           <li>   name={item.name} </li>
+           <li>  price={item.price}  </li> 
+           <li>  quantity={item.count} </li>
+            </ul>
+          )
+        })
+      
+    });
+
+  }
+    console.log("order cart", this.state.order)
+
     return (
       <div className ="profile">
         <Form>
@@ -77,10 +119,14 @@ export default class Profile extends Component {
           <Button onClick={this.EditProfile} class="btn btn-secondary">
             Edit
           </Button>
+        
         </Form>
         {this.state.showComponent ? (
+
           <EditProfile hide={this.hide} EditInfo={this.EditInfo} token={this.props.token} editName={this.props.editName}/>
         ) : null }
+        {showOrder}
+
       </div>
     );
   }

@@ -37,6 +37,7 @@ export default class cover extends Component {
       console.log(prodcut.name)
       console.log(prodcut.price)
       console.log(prodcut.quantitiy);
+
       this.props.AddToCart(prodcut);
       console.log("hi from cover");
 

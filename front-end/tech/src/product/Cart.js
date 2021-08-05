@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Button, CardGroup, Card, Collapse } from "react-bootstrap";
+
 import CartElements from "./CartElements";
+
 import { DecQuantitiy } from "../api";
 
 export default class Cart extends Component {
@@ -78,6 +80,7 @@ export default class Cart extends Component {
         <div class="col-xs-6 col-md-4">
         </div>
         <Button onClick={this.BuyProductd}>Buy</Button>
+
       </div>
     );
   }

@@ -31,6 +31,7 @@ export default class EditProfile extends Component {
     //////CHANGED ID TO DYN
     EditUser(this.props.token,info)
       .then((response) => {
+        this.props.editName(this.state.name)
         console.log("user: ", response.data);
 
       })
@@ -82,6 +83,15 @@ export default class EditProfile extends Component {
                 }}
               />
             </Form.Group>
+
+
+
+
+
+
+
+
+            
             <Form.Group controlId="formBasicPassword">
               <Form.Label>City</Form.Label>
               <Form.Control
@@ -104,7 +114,7 @@ export default class EditProfile extends Component {
             />
           </Form.Group>
           <Button variant="primary" type="submit" onClick={this.submitInfo}>
-            Submit
+            SAVE
           </Button>
         </Form>
       </div>

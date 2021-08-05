@@ -1,69 +1,71 @@
-import API_URL from "./apiConfig";
+// import /api from "./apiConfig";
 import axios from "axios";
 
 // INDEX, SHOW, CREATE, UPDATE, DESTROY
 
 // Get All products
 const getAllProducts = () => {
-  return axios.get(`${API_URL}/product`);
+  return axios.get(`/api/product/product`);
 };
 
 const getAllCovers = () => {
-  return axios.get(`${API_URL}/covers`);
+  return axios.get(`/api/product/covers`);
 };
 
 const getAllPowerBanks = () => {
-  return axios.get(`${API_URL}/powerbanks`);
+  return axios.get(`/api/product/powerbanks`);
 };
 
 const getAllCables = () => {
-  return axios.get(`${API_URL}/cables`);
+  return axios.get(`/api/product/cables`);
 };
 
-const getAllUsers = (id) => {
-  return axios.get(`${API_URL}/user`);
+const getAllUsers = () => {
+  return axios.get(`/api/user/user`);
 };
 
 const getUserbyID = (id) => {
-  return axios.get(`${API_URL}/userById/${id}`);
+  return axios.get(`/api/user/userById/${id}`);
 };
 
 const deleteProductByID = (id) => {
-  return axios.delete(`${API_URL}/product/${id}`);
+  return axios.delete(`/api/product/product/${id}`);
 };
 
 //////////////////NAJD
 
 const login = (req) => {
-  return axios.post(`${API_URL}/login`, {
+  return axios.post(`/api/user/login`, {
     email: req.email,
     password: req.password,
   });
 };
+
 const registeration = (req) => {
-  return axios.post(`${API_URL}/register`, req);
+  return axios.post(`/api/user/register`, req);
 };
 // ###################### EditUser
 const EditUser = (id, info) => {
-  console.log(info);
-  return axios.put(`${API_URL}/user/${id}`, info);
+  console.log("xxxx",id);
+  console.log("zzzzz",info);
+  return axios.put(`/api/user/user/${id}`, info);
 };
 
 // Add new product ###########
 const addProduct = (info) => {
-  return axios.post(`${API_URL}/product`, info);
+  return axios.post(`/api/product/product`, info);
 };
 
 const SingIn = (signInEmail, signInPassword) => {
   console.log("AAAAAAAA", signInEmail);
-  return axios.post(`${API_URL}/login`, {
+  return axios.post(`/api/user/login`, {
     email: signInEmail,
     password: signInPassword,
   });
 };
 
 const LogOut = (signInEmail, signInPassword, token) => {
-  return axios.get(`${API_URL}/logout?token=` + token, {
+  return axios.get(`/api/user/logout?token=` + token, {
     email: signInEmail,
     password: signInPassword,
   });
@@ -71,6 +73,13 @@ const LogOut = (signInEmail, signInPassword, token) => {
 
 // decrease quantitiy for product ##############
 const DecQuantitiy = (id, info) => {
+  return axios.put(`/api/product/product/${id}`, info);
+};
+
+
+
+//edite count
+const CartQuntity = (id, info) => {
   return axios.put(`${API_URL}/product/${id}`, info);
 };
 
@@ -89,4 +98,5 @@ export {
   deleteProductByID,
   DecQuantitiy,
   getUserbyID,
+  CartQuntity
 };

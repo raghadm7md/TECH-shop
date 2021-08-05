@@ -7,7 +7,8 @@ const ProductSchema = new mongoose.Schema({
   type: { type: String, required: true },
   description: { type: String },
   image: { type: String },
-  quantitiy:{type:Number}
+  quantitiy:{type:Number},
+  count:{type:Number , default: 1 }
 }, {
   timestamps: true,
 });

@@ -7,12 +7,7 @@ const {User , Order,} =require('../models/user')
 /* ============================================== */
 // to can see the body from req instead of undefined
 router.use(express.json());
-mongoose.connect("mongodb://localhost:27017/tech", {
-  useNewUrlParser: true,
-});
-mongoose.connection.once("open", () => {
-  console.log("DB IS CONNECTED !!!");
-});
+
 /* ============================================== */
 
 router.get("/testUsers", (req, res) => {
@@ -100,7 +95,7 @@ router.get("/userById/:id", (req, res) => {
 
 /* ============================================== */
 //NAJD
-router.post("/user", (req, res) => {
+router.post("/register", (req, res) => {
   console.log("POST /User");
   console.log("BODY: ", req.body);
 
@@ -144,12 +139,14 @@ router.post('/user/order', (req, res) => {
 /* ============================================== */
 //Meshal
 router.put('/user/:id', (req, res) => {
-
+console.log("BELLOOOOWWW");
+console.log(req.params.id);
+console.log(req.body);
   User.findOneAndUpdate({ _id: req.params.id }, req.body, (err, result) => {
     if (err) {
       res.json(err);
     } else {
-      res.json(result);
+      res.json("YES");
     }
   });
 });

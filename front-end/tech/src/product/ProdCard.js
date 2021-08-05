@@ -10,6 +10,8 @@ export default class ProdCard extends Component {
         price: this.props.price,
         quantitiy: this.props.quantity,
         id: this.props.id,
+        count: this.props.count
+
       },
     };
   }
@@ -22,6 +24,7 @@ export default class ProdCard extends Component {
       price: this.props.price,
       quantitiy: quantity,
       _id: this.props.id,
+      count: this.props.count
     };
     this.setState({ Cart: addedProd });
     console.log(this.state.Cart);

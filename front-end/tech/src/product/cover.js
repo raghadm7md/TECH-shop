@@ -36,7 +36,8 @@ export default class cover extends Component {
       console.log(prodcut)
       console.log(prodcut.name)
       console.log(prodcut.price)
-      console.log(prodcut.quantity);
+      console.log(prodcut.quantitiy);
+
       this.props.AddToCart(prodcut);
       console.log("hi from cover");
 
@@ -79,6 +80,7 @@ export default class cover extends Component {
             image={elem.image}
             admin={this.props.isAdmin}
             quantity={elem.quantitiy}
+            count={elem.count}
             deleteProoduct={this.deleteProoduct}
             AddToCart={this.AddToCart}
           />
